@@ -4,8 +4,10 @@ import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import RoutesApps from './routes/RoutesApp';
 import AppBar from './components/appBar'; 
+import { useAuthStore } from './store/useAuthStore';
 
 const Main = () => {
+  const logged = useAuthStore(state => state.loggedIn);
   return (
     <View style={styles.container}>
       <NavigationContainer>

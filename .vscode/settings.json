@@ -4,7 +4,10 @@
         "Formik",
         "Ingrese",
         "Iniciar",
+        "otros",
         "presionado",
-        "sesion"
-    ]
+        "sesion",
+        "zustand"
+    ],
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
