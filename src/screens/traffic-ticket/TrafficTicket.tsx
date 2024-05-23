@@ -8,6 +8,7 @@ import InfractionDate from './sections/DateDetails';
 import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo de formulario
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Stack = createStackNavigator();
@@ -21,13 +22,14 @@ const initialValues: FormValues = {
   carModel: '',
   date: new Date(),
   time: new Date(),
+  latitude:'',
+  longitude:'',
 };
 
 
 
 const TrafficTicketScreen: React.FC = (navigation:any) => {
-
-  const { handleSubmit, handleGetCurrentLocation, handlePhotoCapture } = useTrafficTicketForm();
+  const { handleSubmit } = useTrafficTicketForm();
 
   // const handleSubmit = (values: FormValues) => {
   //   console.log(values);

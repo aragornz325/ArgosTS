@@ -2,24 +2,20 @@ import { useState, useEffect } from 'react';
 import { Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
+import { FormValues } from '../interfaces/ticket.interface';
+import { useNavigation } from '@react-navigation/native';
 
-interface FormValues {
-  name: string;
-  licenseNumber: string;
-  email: string;
-  carColor: string;
-  carMake: string;
-  carModel: string;
-  date: Date;
-}
 
 const useTrafficTicketForm = () => {
+  const { navigate } = useNavigation();
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const { setField } = useTrafficTicketStore();
 
   useEffect(() => {
+
     (async () => {
       const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
       const mediaLibraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -31,6 +27,15 @@ const useTrafficTicketForm = () => {
     })();
   }, []);
 
+
+
+  const getPermissionAsync = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== 'granted') {
+    return;
+  }
+  };
+
   const handlePhotoCapture = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -39,25 +44,31 @@ const useTrafficTicketForm = () => {
 
     if (!result.canceled) {
       console.log(result.assets[0].uri);
-      // Aquí puedes manejar el resultado de la captura de la foto, por ejemplo, guardarla en el estado
     }
   };
 
   const handleGetCurrentLocation = async () => {
-    let location = await Location.getCurrentPositionAsync({});
-    setField('gpsPosition', {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    });
+    try {
+      getPermissionAsync();
+      let location = await Location.getCurrentPositionAsync({});
+      setField('latitude', location.coords.latitude.toString());
+      setField('longitude', location.coords.longitude.toString());
+      return location; // Devuelve la ubicación actual
+    } catch (error) {
+      console.error('Error al obtener la ubicación:', error);
+      return null; // En caso de error, devuelve null
+    }
   };
 
-  const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
+  const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log(values);
-    handleGetCurrentLocation();
+    await handleGetCurrentLocation();
+    actions.resetForm();
     actions.setSubmitting(false);
   };
 
   return {
+    handleGetCurrentLocation,
     datePickerVisible,
     setDatePickerVisible,
     handlePhotoCapture,

@@ -8,7 +8,8 @@ interface TrafficTicketState {
   carColor: string;
   carMake: string;
   carModel: string;
-  gpsPosition: { latitude: number; longitude: number } | null;
+  latitude: string;
+  longitude: string;
   setField: (field: string, value: any) => void;
 }
 
@@ -20,6 +21,7 @@ export const useTrafficTicketStore = create<TrafficTicketState>((set) => ({
   carColor: '',
   carMake: '',
   carModel: '',
-  gpsPosition: null,
+  latitude: '',
+  longitude: '',
   setField: (field, value) => set((state) => ({ ...state, [field]: value })),
 }));

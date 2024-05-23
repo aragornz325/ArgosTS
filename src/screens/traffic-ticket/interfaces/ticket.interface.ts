@@ -11,6 +11,8 @@ export interface FormValues {
   carModel: string;
   date: Date;
   time: Date;
+  latitude: string;
+  longitude: string;
 }
 
 export interface DriverDetailsProps {
