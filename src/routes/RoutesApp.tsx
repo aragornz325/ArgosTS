@@ -25,7 +25,7 @@ function RoutesApps() {
       <Stack.Screen name="TrafficTicket" options={{ headerShown: false }}>
         {props => (
           <ProtectedRoutes>
-            <TrafficTicket {...props} />
+            <TrafficTicket />
           </ProtectedRoutes>
         )}
       </Stack.Screen>
