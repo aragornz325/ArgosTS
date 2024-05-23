@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { FormikProps } from 'formik';
-import { FormValues } from '../interfaces/ticket.interface'; // Importa tu tipo de formulario
-
-interface CarDetailsProps extends FormikProps<FormValues> {
-  navigation: any;
-}
+import { FormikErrors, FormikProps, FormikTouched } from 'formik';
+import { FormValues } from '../interfaces/ticket.interface';
+import { NavigationProp } from '@react-navigation/native';
+import { CarDetailsProps } from '../interfaces/ticket.interface'; // Importa tu tipo de formulario
 
 const CarDetails: React.FC<CarDetailsProps> = ({
   navigation,

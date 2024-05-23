@@ -6,6 +6,8 @@ import { DriverDetailsProps } from '../interfaces/ticket.interface';
 import useTrafficTicketForm from '../hooks/useTrafficTiketForm';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import { useNavigation } from '@react-navigation/native';
+import { useTrafficTicketStore } from '../../../store/useTicketStore';
+import { adaptHandleChange, adaptHandleBlur } from '../../../utils/adapter.handler';
 
 const DriverDetails: React.FC<DriverDetailsProps> = ({
     navigation,
@@ -17,22 +19,16 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
 }) => {
     
     const { handleGetCurrentLocation } = useTrafficTicketForm();
-    
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
     useEffect(() => {
-        const getInitialLocation = async () => {
-            const location = await handleGetCurrentLocation();
-            if (location) {
-                setLatitude(location.coords.latitude.toString());
-                setLongitude(location.coords.longitude.toString());
-                console.log('esto es location', location);
-            } else {
-                console.log('No se pudo obtener la ubicación');
-            }
-        };
-        getInitialLocation();
-    }, []);
+        handleGetCurrentLocation()
+    }, []); 
+    const latitude = useTrafficTicketStore(state => state.latitude);
+    const longitude = useTrafficTicketStore(state => state.longitude);
+    useEffect(() => {
+        handleChange('latitude')(latitude.toString());
+        handleChange('longitude')(longitude.toString());
+      }, [latitude, longitude]);
+    
 
     const isNextButtonDisabled =
         !!errors.name ||
@@ -65,13 +61,13 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('latitude')}
                 onBlur={handleBlur('latitude')}
-                value={values.latitude}  // Cambiado a solo values.latitude
+                value={values.latitude}
             />
             <TextInput
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('longitude')}
                 onBlur={handleBlur('longitude')}
-                value={values.longitude}  // Cambiado a solo values.longitude
+                value={values.longitude}
             />
 
             <Button

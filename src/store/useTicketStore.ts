@@ -23,5 +23,5 @@ export const useTrafficTicketStore = create<TrafficTicketState>((set) => ({
   carModel: '',
   latitude: '',
   longitude: '',
-  setField: (field, value) => set((state) => ({ ...state, [field]: value })),
+  setField: (field:string, value:any) => set((state) => ({ ...state, [field]: value })),
 }));

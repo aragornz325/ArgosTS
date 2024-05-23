@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 const useTrafficTicketForm = () => {
   const { navigate } = useNavigation();
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const { setField } = useTrafficTicketStore();
+  const  setField  = useTrafficTicketStore(state => state.setField);
 
   useEffect(() => {
 

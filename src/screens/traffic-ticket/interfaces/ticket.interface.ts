@@ -1,6 +1,6 @@
 // types.ts
 import { NavigationProp } from '@react-navigation/native';
-import { FormikErrors, FormikTouched } from 'formik';
+import { FormikErrors, FormikTouched, FormikProps } from 'formik';
 
 export interface FormValues {
   name: string;
@@ -18,8 +18,8 @@ export interface FormValues {
 export interface DriverDetailsProps {
   navigation: NavigationProp<any>;
   values: FormValues;
-  handleChange: (field: keyof FormValues) => (e: string) => void;
-  handleBlur: (field: keyof FormValues) => (e: any) => void;
+  handleChange: any;
+  handleBlur: any;
   errors: FormikErrors<FormValues>;
   touched: FormikTouched<FormValues>;
 }
@@ -27,8 +27,8 @@ export interface DriverDetailsProps {
 export interface CarDetailsProps {
   navigation: NavigationProp<any>;
   values: FormValues;
-  handleChange: (field: keyof FormValues) => (e: string) => void;
-  handleBlur: (field: keyof FormValues) => (e: any) => void;
+  handleChange: any;
+  handleBlur: any;
   errors: FormikErrors<FormValues>;
   touched: FormikTouched<FormValues>;
 }

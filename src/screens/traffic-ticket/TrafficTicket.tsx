@@ -9,6 +9,7 @@ import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo d
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../types/RoutesTypes';
 
 
 const Stack = createStackNavigator();
@@ -44,41 +45,41 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue, errors, touched }: FormikProps<FormValues>) => (
         <Stack.Navigator initialRouteName="DriverDetails">
-          <Stack.Screen name="DriverDetails">
-            {(props) => (
-              <DriverDetails
-                {...props}
-                values={values}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="CarDetails">
-            {(props) => (
-              <CarDetails
-                {...props}
-                values={values}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                errors={errors}
-                touched={touched}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="InfractionDate">
-            {(props) => (
-              <InfractionDate
-                {...props}
-                values={values}
-                setFieldValue={setFieldValue}
-                handleSubmit={handleSubmit}
-              />
-            )}
-          </Stack.Screen>
-        </Stack.Navigator>
+        <Stack.Screen name="DriverDetails">
+          {(props) => (
+            <DriverDetails
+              {...props}
+              values={values}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              errors={errors}
+              touched={touched}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="CarDetails">
+          {(props) => (
+            <CarDetails
+              {...props}
+              values={values}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              errors={errors}
+              touched={touched}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="InfractionDate">
+          {(props) => (
+            <InfractionDate
+              {...props}
+              values={values}
+              setFieldValue={setFieldValue}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
       )}
     </Formik>
   );

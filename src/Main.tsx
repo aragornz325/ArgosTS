@@ -11,17 +11,17 @@ import { useAuthStore } from './store/useAuthStore';
 
 const Main = () => {
 
-  useEffect(() => {
-    (async () => {
-      const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
-      const mediaLibraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      const locationStatus = await Location.requestForegroundPermissionsAsync();
+  // useEffect(() => {
+  //   (async () => {
+  //     const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+  //     const mediaLibraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //     const locationStatus = await Location.requestForegroundPermissionsAsync();
 
-      if (cameraStatus.status !== 'granted' || mediaLibraryStatus.status !== 'granted' || locationStatus.status !== 'granted') {
-        Alert.alert('Permission required', 'We need camera, photo library and location permissions to make this work!');
-      }
-    })();
-  }, []);
+  //     if (cameraStatus.status !== 'granted' || mediaLibraryStatus.status !== 'granted' || locationStatus.status !== 'granted') {
+  //       Alert.alert('Permission required', 'We need camera, photo library and location permissions to make this work!');
+  //     }
+  //   })();
+  // }, []);
 
 
   const logged = useAuthStore(state => state.loggedIn);

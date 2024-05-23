@@ -3,10 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Platform }
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FormikProps } from 'formik';
 import { FormValues } from '../interfaces/ticket.interface';
-
-interface InfractionDateProps extends FormikProps<FormValues> {
-  navigation: any;
-}
+import { InfractionDateProps } from '../interfaces/ticket.interface';
 
 const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, handleSubmit }) => {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
