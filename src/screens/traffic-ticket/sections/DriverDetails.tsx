@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { FormikProps } from 'formik';
-import { FormValues } from '../interfaces/ticket.interface'; // Importa tu tipo de formulario
+import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet} from 'react-native';
 import { DriverDetailsProps } from '../interfaces/ticket.interface';
 import useTrafficTicketForm from '../hooks/useTrafficTiketForm';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { useNavigation } from '@react-navigation/native';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
-import { adaptHandleChange, adaptHandleBlur } from '../../../utils/adapter.handler';
+import FormInputValues from '../../../components/formInputValue';
 
 const DriverDetails: React.FC<DriverDetailsProps> = ({
     navigation,
@@ -40,35 +36,37 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
     return (
         <View style={styles.container}>
             <Text style={styles.sectionTitle}>Datos del conductor</Text>
-            <TextInput
-                style={styles.input}
+            <FormInputValues
+                name="name"
                 placeholder="Nombre del conductor"
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
                 value={values.name}
             />
-            {errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
-            <TextInput
-                style={styles.input}
+            <FormInputValues
+                name="email"
                 placeholder="Email del conductor"
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
             />
-            {errors.email && touched.email ? <Text style={styles.error}>{errors.email}</Text> : null}
 
-            <TextInput
+
+            <FormInputValues
+                name="latitude"
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('latitude')}
                 onBlur={handleBlur('latitude')}
                 value={values.latitude}
             />
-            <TextInput
+            <FormInputValues
+                name="longitude"
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('longitude')}
                 onBlur={handleBlur('longitude')}
                 value={values.longitude}
             />
+
 
             <Button
                 title="Siguiente"
@@ -89,16 +87,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginBottom: 16,
-  },
-  error: {
-    color: 'red',
     marginBottom: 16,
   },
 });

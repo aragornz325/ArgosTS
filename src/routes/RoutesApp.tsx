@@ -9,6 +9,8 @@ import About from '../screens/about/About';
 import SignIn from '../screens/signin/SignIn';
 import ProtectedRoutes from './ProtectedRoutes';
 
+import CameraComponent from '../components/camera';
+
 const Stack = createNativeStackNavigator();
 
 function RoutesApps() {

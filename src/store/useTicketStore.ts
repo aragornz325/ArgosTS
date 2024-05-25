@@ -10,6 +10,7 @@ interface TrafficTicketState {
   carModel: string;
   latitude: string;
   longitude: string;
+  photoUri: string;
   setField: (field: string, value: any) => void;
 }
 
@@ -23,5 +24,6 @@ export const useTrafficTicketStore = create<TrafficTicketState>((set) => ({
   carModel: '',
   latitude: '',
   longitude: '',
+  photoUri: '',
   setField: (field:string, value:any) => set((state) => ({ ...state, [field]: value })),
 }));

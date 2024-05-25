@@ -13,6 +13,7 @@ export interface FormValues {
   time: Date;
   latitude: string;
   longitude: string;
+  photo: string;
 }
 
 export interface DriverDetailsProps {
@@ -31,6 +32,11 @@ export interface CarDetailsProps {
   handleBlur: any;
   errors: FormikErrors<FormValues>;
   touched: FormikTouched<FormValues>;
+}
+
+export interface PhotoDetailsProps {
+  navigation: NavigationProp<any>;
+  values: FormValues;
 }
 
 export interface InfractionDateProps {

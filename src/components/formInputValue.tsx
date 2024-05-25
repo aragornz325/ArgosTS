@@ -2,7 +2,7 @@ import { useField } from "formik";
 import StyledTextInput from "./styledTextInput";
 import StyledText from "./styledText";
 import { StyleSheet } from "react-native";
-
+import { TextInputProps } from "react-native-paper";
 
 
 const FormInputValue = ({ name, ...props }) => {

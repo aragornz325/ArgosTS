@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
 import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import { FormValues } from '../interfaces/ticket.interface';
-import { useNavigation } from '@react-navigation/native';
+import { useFormikContext } from 'formik';
 
 
 const useTrafficTicketForm = () => {
-  const { navigate } = useNavigation();
+
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const  setField  = useTrafficTicketStore(state => state.setField);
+ 
 
   useEffect(() => {
 
@@ -34,17 +34,6 @@ const useTrafficTicketForm = () => {
   if (status !== 'granted') {
     return;
   }
-  };
-
-  const handlePhotoCapture = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-    });
-
-    if (!result.canceled) {
-      console.log(result.assets[0].uri);
-    }
   };
 
   const handleGetCurrentLocation = async () => {
@@ -71,7 +60,6 @@ const useTrafficTicketForm = () => {
     handleGetCurrentLocation,
     datePickerVisible,
     setDatePickerVisible,
-    handlePhotoCapture,
     handleSubmit,
   };
 };
