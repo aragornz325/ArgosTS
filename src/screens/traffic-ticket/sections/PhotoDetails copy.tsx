@@ -1,9 +1,29 @@
 import { View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
 import React from 'react';
 import { PhotoDetailsProps } from '../interfaces/ticket.interface';
-import theme from '../../../theme';
+import * as ImagePicker from 'expo-image-picker';
+
+import useTrafficTicketForm from '../hooks/useTrafficTiketForm';
+import { useFormikContext } from 'formik';
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({ navigation, values  }) => {
+  //const { handlePhotoCapture } = useTrafficTicketForm();
+
+
+  const { setFieldValue, values: FormValues } = useFormikContext(); 
+  const handlePhotoCapture = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+    });
+
+    if (!result.canceled) {
+      setFieldValue('photo', result.assets[0].uri);
+    }else{
+      setFieldValue('photo', '');
+    }
+  };
+
 
   const isNextButtonDisabled = !values.photo;
 
@@ -11,7 +31,7 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({ navigation, values  }) => {
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={()=> navigation.navigate('CameraComponent')}
+          onPress={handlePhotoCapture}
           style={styles.photoButton}
         >
           <Text style={styles.photoButtonText}>Tomar foto</Text>
@@ -41,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   photoButton: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: '#007BFF',
     borderRadius: 50,
     height: 100,
     width: 100,

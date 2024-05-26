@@ -4,5 +4,8 @@ export type RootStackParamList = {
     Contact: undefined;
     About: undefined;
     SignIn: undefined;
+    PhotoDetails: undefined;
+    CameraComponent: undefined;
+
   };
   

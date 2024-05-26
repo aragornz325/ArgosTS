@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { FormikProps } from 'formik';
-import { FormValues } from '../interfaces/ticket.interface'; // Importa tu tipo de formulario
+import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet} from 'react-native';
 import { DriverDetailsProps } from '../interfaces/ticket.interface';
 import useTrafficTicketForm from '../hooks/useTrafficTiketForm';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { useNavigation } from '@react-navigation/native';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
-import { adaptHandleChange, adaptHandleBlur } from '../../../utils/adapter.handler';
+import FormInputValues from '../../../components/formInputValue';
 
 const DriverDetails: React.FC<DriverDetailsProps> = ({
     navigation,
@@ -25,55 +21,61 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
     const latitude = useTrafficTicketStore(state => state.latitude);
     const longitude = useTrafficTicketStore(state => state.longitude);
     useEffect(() => {
-        handleChange('latitude')(latitude.toString());
-        handleChange('longitude')(longitude.toString());
+        console.log('latitude', latitude);
+        console.log('longitude', longitude);
+        handleChange('latitude')(latitude);
+        handleChange('longitude')(longitude);
       }, [latitude, longitude]);
-    
-
-    const isNextButtonDisabled =
-        !!errors.name ||
-        !!errors.email ||
-        !values.name ||
-        !values.email;
-        
 
     return (
         <View style={styles.container}>
             <Text style={styles.sectionTitle}>Datos del conductor</Text>
-            <TextInput
-                style={styles.input}
+            <FormInputValues
+                name="name"
                 placeholder="Nombre del conductor"
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
-                value={values.name}
+                value={values.driverName}
             />
-            {errors.name && touched.name ? <Text style={styles.error}>{errors.name}</Text> : null}
-            <TextInput
-                style={styles.input}
+            <FormInputValues
+                name="email"
                 placeholder="Email del conductor"
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
-                value={values.email}
+                value={values.driverEmail}
             />
-            {errors.email && touched.email ? <Text style={styles.error}>{errors.email}</Text> : null}
-
-            <TextInput
+            <FormInputValues
+                name="phone"
+                placeholder="telefono del conductor"
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.driverPhone}
+            />
+            <FormInputValues
+                name="licenseNumber"
+                placeholder="Numero de licencia del conductor"
+                onChangeText={handleChange('licenseNumber')}
+                onBlur={handleBlur('licenseNumber')}
+                value={values.driverLicenseNumber}
+            />
+            <FormInputValues
+                name="latitude"
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('latitude')}
                 onBlur={handleBlur('latitude')}
                 value={values.latitude}
             />
-            <TextInput
+            <FormInputValues
+                name="longitude"
                 style={{ display: 'none' }} 
                 onChangeText={handleChange('longitude')}
                 onBlur={handleBlur('longitude')}
                 value={values.longitude}
             />
-
             <Button
                 title="Siguiente"
                 onPress={() => navigation.navigate('CarDetails')}
-                disabled={isNextButtonDisabled}
+                disabled={!!errors.longitude || !!errors.latitude || !values.latitude || !values.longitude}
             />
         </View>
     );
@@ -89,16 +91,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginBottom: 16,
-  },
-  error: {
-    color: 'red',
     marginBottom: 16,
   },
 });

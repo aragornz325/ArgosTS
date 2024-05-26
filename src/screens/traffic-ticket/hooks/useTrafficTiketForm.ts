@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
 import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import { FormValues } from '../interfaces/ticket.interface';
-import { useNavigation } from '@react-navigation/native';
+
 
 
 const useTrafficTicketForm = () => {
-  const { navigate } = useNavigation();
+
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const  setField  = useTrafficTicketStore(state => state.setField);
+  //const { setFieldValue } = useFormikContext();
+ 
 
   useEffect(() => {
 
@@ -36,16 +37,19 @@ const useTrafficTicketForm = () => {
   }
   };
 
-  const handlePhotoCapture = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: false,
-    });
+  // const handlePhotoCapture = async () => {
+  //   let result = await ImagePicker.launchCameraAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: false,
+  //   });
 
-    if (!result.canceled) {
-      console.log(result.assets[0].uri);
-    }
-  };
+  //   if (!result.canceled) {
+  //     setFieldValue('photo', result.assets[0].uri);
+  //   }else{
+  //     setFieldValue('photo', '');
+  //   }
+  // };
+
 
   const handleGetCurrentLocation = async () => {
     try {
@@ -53,10 +57,10 @@ const useTrafficTicketForm = () => {
       let location = await Location.getCurrentPositionAsync({});
       setField('latitude', location.coords.latitude.toString());
       setField('longitude', location.coords.longitude.toString());
-      return location; // Devuelve la ubicación actual
+      return location; 
     } catch (error) {
       console.error('Error al obtener la ubicación:', error);
-      return null; // En caso de error, devuelve null
+      return null; 
     }
   };
 
@@ -71,8 +75,8 @@ const useTrafficTicketForm = () => {
     handleGetCurrentLocation,
     datePickerVisible,
     setDatePickerVisible,
-    handlePhotoCapture,
     handleSubmit,
+    //handlePhotoCapture
   };
 };
 

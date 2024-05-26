@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { FormikErrors, FormikProps, FormikTouched } from 'formik';
-import { FormValues } from '../interfaces/ticket.interface';
-import { NavigationProp } from '@react-navigation/native';
-import { CarDetailsProps } from '../interfaces/ticket.interface'; // Importa tu tipo de formulario
+import { CarDetailsProps } from '../interfaces/ticket.interface';
+import FormInputValue from '../../../components/formInputValue';
 
 const CarDetails: React.FC<CarDetailsProps> = ({
   navigation,
@@ -15,50 +13,58 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 }) => {
 
     const isNextButtonDisabled = 
-    !!errors.licenseNumber || 
-    !!errors.carColor || 
-    !!errors.carMake || 
-    !!errors.carModel || 
-    !values.licenseNumber || 
-    !values.carColor || 
-    !values.carMake || 
-    !values.carModel;
+    !!errors.plateNumber || 
+    !!errors.color || 
+    !!errors.vehicleBrand || 
+    !!errors.vehicleModel || 
+    !values.plateNumber || 
+    !values.color || 
+    !values.vehicleBrand || 
+    !values.vehicleModel;
 
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Datos del auto</Text>
-      <TextInput
-        style={styles.input}
+      <FormInputValue
+        name="plateNumber"
         placeholder="Número de patente"
-        onChangeText={handleChange('licenseNumber')}
-        onBlur={handleBlur('licenseNumber')}
-        value={values.licenseNumber}
+        onChangeText={handleChange('plateNumber')}
+        onBlur={handleBlur('plateNumber')}
+        value={values.plateNumber}
       />
-      {errors.licenseNumber && touched.licenseNumber ? <Text style={styles.error}>{errors.licenseNumber}</Text> : null}
-      <TextInput
-        style={styles.input}
+     
+      <FormInputValue
+        name="color"
         placeholder="Color del auto"
-        onChangeText={handleChange('carColor')}
-        onBlur={handleBlur('carColor')}
-        value={values.carColor}
+        onChangeText={handleChange('color')}
+        onBlur={handleBlur('color')}
+        value={values.color}
       />
-      {errors.carColor && touched.carColor ? <Text style={styles.error}>{errors.carColor}</Text> : null}
-      <TextInput
-        style={styles.input}
+      
+      <FormInputValue
+        name="vehicleBrand"
         placeholder="Fabricante del auto"
-        onChangeText={handleChange('carMake')}
-        onBlur={handleBlur('carMake')}
-        value={values.carMake}
+        onChangeText={handleChange('vehicleBrand')}
+        onBlur={handleBlur('vehicleBrand')}
+        value={values.vehicleBrand}
       />
-      {errors.carMake && touched.carMake ? <Text style={styles.error}>{errors.carMake}</Text> : null}
-      <TextInput
-        style={styles.input}
+      <FormInputValue
+        name="vehicleModel"
         placeholder="Modelo del auto"
-        onChangeText={handleChange('carModel')}
-        onBlur={handleBlur('carModel')}
-        value={values.carModel}
+        onChangeText={handleChange('vehicleModel')}
+        onBlur={handleBlur('vehicleModel')}
+        value={values.vehicleModel}
       />
-      {errors.carModel && touched.carModel ? <Text style={styles.error}>{errors.carModel}</Text> : null}
+      <FormInputValue
+        name="typeOfService"
+        placeholder="tipo de servicio"
+        onChangeText={handleChange('typeOfService')}
+        onBlur={handleBlur('typeOfService')}
+        value={values.typeOfService}
+      />
+
+
+      
       <Button 
       title="Siguiente" 
       onPress={() => navigation.navigate('InfractionDate')} 
@@ -75,16 +81,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginBottom: 16,
-  },
-  error: {
-    color: 'red',
     marginBottom: 16,
   },
 });

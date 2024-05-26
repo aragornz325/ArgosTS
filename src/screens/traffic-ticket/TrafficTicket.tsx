@@ -1,41 +1,47 @@
 import React from 'react';
 import { Formik, FormikProps } from 'formik';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as Yup from 'yup';
-import DriverDetails from './sections/DriverDetails';
-import CarDetails from './sections/CarDetails';
-import InfractionDate from './sections/DateDetails';
 import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo de formulario
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../types/RoutesTypes';
 
+
+import DriverDetails from './sections/DriverDetails';
+import CarDetails from './sections/CarDetails';
+import InfractionDate from './sections/DateDetails';
+import PhotoDetails from './sections/PhotoDetails';
+import CameraComponent from '../../components/camera';
 
 const Stack = createStackNavigator();
 
 const initialValues: FormValues = {
-  name: '',
-  licenseNumber: '',
-  email: '',
-  carColor: '',
-  carMake: '',
-  carModel: '',
   date: new Date(),
   time: new Date(),
-  latitude:'',
-  longitude:'',
-};
+  location: '',
+  longitude: '',
+  latitude: '',
+  plateNumber: '',
+  vehicleBrand: '',
+  vehicleModel: '',
+  modelYear: 0,
+  color: '',
+  typeOfService: '',
+  infractionCode: null,
+  lawArticleNumber: null,
+  observations: '',
+  driverName: '',
+  driverLicenseNumber: '',
+  driverAddress: '',
+  driverPhone: '',
+  driverEmail: '',
+  photo: '',
 
+};
 
 
 const TrafficTicketScreen: React.FC = (navigation:any) => {
   const { handleSubmit } = useTrafficTicketForm();
 
-  // const handleSubmit = (values: FormValues) => {
-  //   console.log(values);
-  //   // Aquí puedes manejar el envío de los datos
-  // };
 
   return (
     <Formik
@@ -44,8 +50,31 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
       onSubmit={handleSubmit}
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue, errors, touched }: FormikProps<FormValues>) => (
-        <Stack.Navigator initialRouteName="DriverDetails">
-        <Stack.Screen name="DriverDetails">
+        <Stack.Navigator initialRouteName="PhotoDetails">
+        <Stack.Screen 
+        name='PhotoDetails'
+        options={{ headerShown: false }}>
+          {(props) => (
+            <PhotoDetails
+            {...props}
+            values={values}
+            />
+          )}
+        </Stack.Screen>
+        
+        <Stack.Screen 
+        name='CameraComponent'
+        options={{ headerShown: false }}>
+          {(props) => (
+            <CameraComponent
+            />
+          )}
+        </Stack.Screen>
+
+
+        <Stack.Screen 
+        name="DriverDetails"
+        options={{ headerShown: false }} >
           {(props) => (
             <DriverDetails
               {...props}
@@ -57,7 +86,9 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="CarDetails">
+        <Stack.Screen 
+        name="CarDetails"
+        options={{ headerShown: false }}>
           {(props) => (
             <CarDetails
               {...props}
@@ -69,7 +100,9 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="InfractionDate">
+        <Stack.Screen 
+        name="InfractionDate"
+        options={{ headerShown: false }}>
           {(props) => (
             <InfractionDate
               {...props}
