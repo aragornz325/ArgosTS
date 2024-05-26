@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "aling",
+        "cámara",
         "Datos",
         "Entypo",
         "Formik",
@@ -8,10 +9,17 @@
         "Infraccion",
         "Ingrese",
         "Iniciar",
+        "obtener",
         "otros",
+        "permisos",
         "presionado",
         "sesion",
+        "tienes",
+        "tomada",
         "Tomar",
+        "tomo",
+        "ubicación",
+        "usar",
         "zustand"
     ],
     "CodeGPT.apiKey": "CodeGPT Plus Beta"

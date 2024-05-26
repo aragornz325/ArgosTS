@@ -1,15 +1,14 @@
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
-import { CameraView, Camera, CameraType, FlashMode } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
-
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { CameraView, CameraType, FlashMode } from 'expo-camera';
 
 import ConstantArgos from '../utils/constant';
 import ButtonCamera from './button';
 import useCamera from './hooksComponents/useCamera';
+import {CameraProps} from '../interfaces/camera.interface';
 
 
-const CameraComponent = () => {
+const CameraComponent: React.FC = () => {
     const {
         hasCameraPermission,
         type,
@@ -21,18 +20,7 @@ const CameraComponent = () => {
         cameraRef,
         takePicture,
         saveImage,
-    } = useCamera(ConstantArgos.CAMERA_TYPE.BACK as CameraType, ConstantArgos.FLASH_MODE.OFF as FlashMode) as {
-        hasCameraPermission: boolean | null;
-        type: "front" | "back";
-        setType: React.Dispatch<React.SetStateAction<"front" | "back">>;
-        flash: FlashMode;
-        setFlash: React.Dispatch<React.SetStateAction<FlashMode>>;
-        photo: string | null;
-        setPhoto: React.Dispatch<React.SetStateAction<string | null>>;
-        cameraRef: React.RefObject<CameraView> | null;
-        takePicture: () => void;
-        saveImage: () => Promise<void>;
-    };
+    } = useCamera(ConstantArgos.CAMERA_TYPE.BACK as CameraType, ConstantArgos.FLASH_MODE.OFF as FlashMode) as CameraProps; 
 
     if (hasCameraPermission === false) {
         return <Text>No tienes permisos para usar la cámara</Text>;

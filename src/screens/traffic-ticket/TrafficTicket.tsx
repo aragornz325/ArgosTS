@@ -10,6 +10,7 @@ import DriverDetails from './sections/DriverDetails';
 import CarDetails from './sections/CarDetails';
 import InfractionDate from './sections/DateDetails';
 import PhotoDetails from './sections/PhotoDetails';
+import CameraComponent from '../../components/camera';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,16 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
           )}
         </Stack.Screen>
         
+        <Stack.Screen 
+        name='CameraComponent'
+        options={{ headerShown: false }}>
+          {(props) => (
+            <CameraComponent
+            />
+          )}
+        </Stack.Screen>
+
+
         <Stack.Screen 
         name="DriverDetails"
         options={{ headerShown: false }} >

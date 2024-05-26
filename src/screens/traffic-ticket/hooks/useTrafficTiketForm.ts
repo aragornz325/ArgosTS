@@ -5,13 +5,14 @@ import * as Location from 'expo-location';
 import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import { FormValues } from '../interfaces/ticket.interface';
-import { useFormikContext } from 'formik';
+
 
 
 const useTrafficTicketForm = () => {
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const  setField  = useTrafficTicketStore(state => state.setField);
+  //const { setFieldValue } = useFormikContext();
  
 
   useEffect(() => {
@@ -36,16 +37,30 @@ const useTrafficTicketForm = () => {
   }
   };
 
+  // const handlePhotoCapture = async () => {
+  //   let result = await ImagePicker.launchCameraAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: false,
+  //   });
+
+  //   if (!result.canceled) {
+  //     setFieldValue('photo', result.assets[0].uri);
+  //   }else{
+  //     setFieldValue('photo', '');
+  //   }
+  // };
+
+
   const handleGetCurrentLocation = async () => {
     try {
       getPermissionAsync();
       let location = await Location.getCurrentPositionAsync({});
       setField('latitude', location.coords.latitude.toString());
       setField('longitude', location.coords.longitude.toString());
-      return location; // Devuelve la ubicación actual
+      return location; 
     } catch (error) {
       console.error('Error al obtener la ubicación:', error);
-      return null; // En caso de error, devuelve null
+      return null; 
     }
   };
 
@@ -61,6 +76,7 @@ const useTrafficTicketForm = () => {
     datePickerVisible,
     setDatePickerVisible,
     handleSubmit,
+    //handlePhotoCapture
   };
 };
 
