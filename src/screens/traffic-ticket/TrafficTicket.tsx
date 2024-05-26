@@ -15,17 +15,27 @@ import CameraComponent from '../../components/camera';
 const Stack = createStackNavigator();
 
 const initialValues: FormValues = {
-  name: '',
-  licenseNumber: '',
-  email: '',
-  carColor: '',
-  carMake: '',
-  carModel: '',
   date: new Date(),
   time: new Date(),
-  latitude:'',
-  longitude:'',
+  location: '',
+  longitude: '',
+  latitude: '',
+  plateNumber: '',
+  vehicleBrand: '',
+  vehicleModel: '',
+  modelYear: 0,
+  color: '',
+  typeOfService: '',
+  infractionCode: null,
+  lawArticleNumber: null,
+  observations: '',
+  driverName: '',
+  driverLicenseNumber: '',
+  driverAddress: '',
+  driverPhone: '',
+  driverEmail: '',
   photo: '',
+
 };
 
 

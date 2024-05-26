@@ -13,49 +13,57 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 }) => {
 
     const isNextButtonDisabled = 
-    !!errors.licenseNumber || 
-    !!errors.carColor || 
-    !!errors.carMake || 
-    !!errors.carModel || 
-    !values.licenseNumber || 
-    !values.carColor || 
-    !values.carMake || 
-    !values.carModel;
+    !!errors.plateNumber || 
+    !!errors.color || 
+    !!errors.vehicleBrand || 
+    !!errors.vehicleModel || 
+    !values.plateNumber || 
+    !values.color || 
+    !values.vehicleBrand || 
+    !values.vehicleModel;
 
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Datos del auto</Text>
       <FormInputValue
-        name="licenseNumber"
+        name="plateNumber"
         placeholder="Número de patente"
-        onChangeText={handleChange('licenseNumber')}
-        onBlur={handleBlur('licenseNumber')}
-        value={values.licenseNumber}
+        onChangeText={handleChange('plateNumber')}
+        onBlur={handleBlur('plateNumber')}
+        value={values.plateNumber}
       />
      
       <FormInputValue
-        name="carColor"
+        name="color"
         placeholder="Color del auto"
-        onChangeText={handleChange('carColor')}
-        onBlur={handleBlur('carColor')}
-        value={values.carColor}
+        onChangeText={handleChange('color')}
+        onBlur={handleBlur('color')}
+        value={values.color}
       />
       
       <FormInputValue
-        name="carMake"
+        name="vehicleBrand"
         placeholder="Fabricante del auto"
-        onChangeText={handleChange('carMake')}
-        onBlur={handleBlur('carMake')}
-        value={values.carMake}
+        onChangeText={handleChange('vehicleBrand')}
+        onBlur={handleBlur('vehicleBrand')}
+        value={values.vehicleBrand}
       />
-      
       <FormInputValue
-        name="carModel"
+        name="vehicleModel"
         placeholder="Modelo del auto"
-        onChangeText={handleChange('carModel')}
-        onBlur={handleBlur('carModel')}
-        value={values.carModel}
+        onChangeText={handleChange('vehicleModel')}
+        onBlur={handleBlur('vehicleModel')}
+        value={values.vehicleModel}
       />
+      <FormInputValue
+        name="typeOfService"
+        placeholder="tipo de servicio"
+        onChangeText={handleChange('typeOfService')}
+        onBlur={handleBlur('typeOfService')}
+        value={values.typeOfService}
+      />
+
+
       
       <Button 
       title="Siguiente" 

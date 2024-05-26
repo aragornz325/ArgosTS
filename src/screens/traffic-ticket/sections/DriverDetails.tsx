@@ -21,17 +21,11 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
     const latitude = useTrafficTicketStore(state => state.latitude);
     const longitude = useTrafficTicketStore(state => state.longitude);
     useEffect(() => {
-        handleChange('latitude')(latitude.toString());
-        handleChange('longitude')(longitude.toString());
+        console.log('latitude', latitude);
+        console.log('longitude', longitude);
+        handleChange('latitude')(latitude);
+        handleChange('longitude')(longitude);
       }, [latitude, longitude]);
-    
-
-    const isNextButtonDisabled =
-        !!errors.name ||
-        !!errors.email ||
-        !values.name ||
-        !values.email;
-        
 
     return (
         <View style={styles.container}>
@@ -41,17 +35,29 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
                 placeholder="Nombre del conductor"
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
-                value={values.name}
+                value={values.driverName}
             />
             <FormInputValues
                 name="email"
                 placeholder="Email del conductor"
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
-                value={values.email}
+                value={values.driverEmail}
             />
-
-
+            <FormInputValues
+                name="phone"
+                placeholder="telefono del conductor"
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.driverPhone}
+            />
+            <FormInputValues
+                name="licenseNumber"
+                placeholder="Numero de licencia del conductor"
+                onChangeText={handleChange('licenseNumber')}
+                onBlur={handleBlur('licenseNumber')}
+                value={values.driverLicenseNumber}
+            />
             <FormInputValues
                 name="latitude"
                 style={{ display: 'none' }} 
@@ -66,12 +72,10 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
                 onBlur={handleBlur('longitude')}
                 value={values.longitude}
             />
-
-
             <Button
                 title="Siguiente"
                 onPress={() => navigation.navigate('CarDetails')}
-                disabled={isNextButtonDisabled}
+                disabled={!!errors.longitude || !!errors.latitude || !values.latitude || !values.longitude}
             />
         </View>
     );

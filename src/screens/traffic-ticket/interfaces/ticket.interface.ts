@@ -3,16 +3,25 @@ import { NavigationProp } from '@react-navigation/native';
 import { FormikErrors, FormikTouched, FormikProps } from 'formik';
 
 export interface FormValues {
-  name: string;
-  email: string;
-  licenseNumber: string;
-  carColor: string;
-  carMake: string;
-  carModel: string;
-  date: Date;
   time: Date;
+  date: Date;
+  location: string;
   latitude: string;
   longitude: string;
+  plateNumber: string;
+  vehicleBrand: string;
+  vehicleModel: string;
+  modelYear: number;
+  color: string;
+  typeOfService: string;
+  infractionCode: string | null;
+  lawArticleNumber: string | null;
+  observations: string;
+  driverName: string;
+  driverLicenseNumber: string;
+  driverAddress: string;
+  driverPhone: string;
+  driverEmail: string;
   photo: string;
 }
 
