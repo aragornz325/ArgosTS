@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
 import React from 'react';
 import { PhotoDetailsProps } from '../interfaces/ticket.interface';
+import theme from '../../../theme';
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({ navigation, values  }) => {
 
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   photoButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: theme.colors.primary,
     borderRadius: 50,
     height: 100,
     width: 100,
