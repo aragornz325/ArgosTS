@@ -1,99 +1,133 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { FormikProps } from 'formik';
-import { FormValues } from '../interfaces/ticket.interface';
 import { InfractionDateProps } from '../interfaces/ticket.interface';
+import FormInputValue from '../../../components/formInputValue';
+import NextButton from '../../../components/nextButton';
+import BackButton from '../../../components/backButton';
+import ButtonsContainer from '../../../components/buttonsContainer';
+import FormContainer from '../../../components/FormContainer';
 
-const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, handleSubmit }) => {
+const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, handleBlur, handleChange, errors, navigation }) => {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
 
-  const isNextButtonDisabled = !values.date || !values.time;
+  const isNextButtonDisabled = !values.date || !values.time || !values.location || !!errors.location;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Fecha de la Infracción</Text>
-      <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
-        <View pointerEvents="none">
-          <TextInput
-            style={styles.input}
-            placeholder="Fecha"
-            value={values.date.toDateString()}
-            editable={false}
+    <KeyboardAvoidingView 
+      style={styles.keyboardAvoidingView} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
+      <View style={styles.container}>
+
+      <FormContainer>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Fecha</Text>
+          <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
+            <View pointerEvents="none">
+              <FormInputValue
+                name="date"
+                placeholder="Fecha"
+                value={values.date.toDateString()}
+                editable={false}
+              />
+            </View>
+          </TouchableOpacity>
+          {datePickerVisible && (
+            <DateTimePicker
+              value={values.date}
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => {
+                setDatePickerVisible(Platform.OS === 'ios');
+                const currentDate = selectedDate || values.date;
+                setFieldValue('date', currentDate);
+                if (Platform.OS !== 'ios') {
+                  setDatePickerVisible(false);
+                }
+              }}
+            />
+          )}
+        </View>
+
+        <View style={styles.section}>
+          <TouchableOpacity onPress={() => setTimePickerVisible(true)}>
+            <View pointerEvents="none">
+              <FormInputValue
+                name="time"
+                placeholder="Hora"
+                value={values.time.toTimeString().slice(0, 5)}
+                editable={false}
+              />
+            </View>
+          </TouchableOpacity>
+          {timePickerVisible && (
+            <DateTimePicker
+              value={values.time}
+              mode="time"
+              display="default"
+              onChange={(event, selectedTime) => {
+                setTimePickerVisible(Platform.OS === 'ios');
+                const currentTime = selectedTime || values.time;
+                setFieldValue('time', currentTime);
+                if (Platform.OS !== 'ios') {
+                  setTimePickerVisible(false);
+                }
+              }}
+            />
+          )}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Lugar</Text>
+          <FormInputValue
+            name="location"
+            placeholder="Lugar de la infracción"
+            onChangeText={handleChange('location')}
+            onBlur={handleBlur('location')}
+            value={values.location}
           />
         </View>
-      </TouchableOpacity>
-      {datePickerVisible && (
-        <DateTimePicker
-          value={values.date}
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => {
-            setDatePickerVisible(Platform.OS === 'ios');
-            const currentDate = selectedDate || values.date;
-            setFieldValue('date', currentDate);
-            if (Platform.OS !== 'ios') {
-              setDatePickerVisible(false);
-            }
-          }}
-        />
-      )}
-
-      <TouchableOpacity onPress={() => setTimePickerVisible(true)}>
-        <View pointerEvents="none">
-          <TextInput
-            style={styles.input}
-            placeholder="Hora"
-            value={values.time.toTimeString().slice(0, 5)}
-            editable={false}
-          />
-        </View>
-      </TouchableOpacity>
-      {timePickerVisible && (
-        <DateTimePicker
-          value={values.time}
-          mode="time"
-          display="default"
-          onChange={(event, selectedTime) => {
-            setTimePickerVisible(Platform.OS === 'ios');
-            const currentTime = selectedTime || values.time;
-            setFieldValue('time', currentTime);
-            if (Platform.OS !== 'ios') {
-              setTimePickerVisible(false);
-            }
-          }}
-        />
-      )}
-
-      <Button 
-      title="Enviar" 
-      onPress={() => handleSubmit()}
-      disabled={isNextButtonDisabled} />
-    </View>
+        </FormContainer>
+        <ButtonsContainer>
+          <BackButton navigation={navigation} />
+          <NextButton 
+            navigation={navigation} 
+            pagaName="InfractionDetails"
+            disabled={isNextButtonDisabled} />
+        </ButtonsContainer>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  keyboardAvoidingView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 16,
+  },
+  section: {
+    marginBottom: 16,
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 24,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   input: {
+    width: '100%',
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 8,
-    marginBottom: 16,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 16,
-  },
+    borderRadius: 4,
+  }
 });
 
 export default InfractionDate;

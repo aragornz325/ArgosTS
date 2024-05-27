@@ -1,5 +1,6 @@
 // types.ts
-import { NavigationProp } from '@react-navigation/native';
+import { ParamListBase } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { FormikErrors, FormikTouched, FormikProps } from 'formik';
 
 export interface FormValues {
@@ -26,7 +27,7 @@ export interface FormValues {
 }
 
 export interface DriverDetailsProps {
-  navigation: NavigationProp<any>;
+  navigation: StackNavigationProp<ParamListBase>;
   values: FormValues;
   handleChange: any;
   handleBlur: any;
@@ -35,7 +36,7 @@ export interface DriverDetailsProps {
 }
 
 export interface CarDetailsProps {
-  navigation: NavigationProp<any>;
+  navigation: StackNavigationProp<ParamListBase>;
   values: FormValues;
   handleChange: any;
   handleBlur: any;
@@ -44,12 +45,27 @@ export interface CarDetailsProps {
 }
 
 export interface PhotoDetailsProps {
-  navigation: NavigationProp<any>;
+  navigation: StackNavigationProp<ParamListBase>;
   values: FormValues;
+  
 }
 
 export interface InfractionDateProps {
     values: FormValues;
+    navigation: StackNavigationProp<ParamListBase>;
     setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-    handleSubmit: () => void;
+    handleChange: any;
+    handleBlur: any;
+    errors: FormikErrors<FormValues>;
+    touched: FormikTouched<FormValues>;
   }
+
+export interface InfractionDetailsProps {
+  navigation: StackNavigationProp<ParamListBase>;
+  values: FormValues;
+  handleChange: any;
+  handleBlur: any;
+  errors: FormikErrors<FormValues>;
+  touched: FormikTouched<FormValues>;
+  handleSubmit: FormikProps<FormValues>['handleSubmit'];
+}

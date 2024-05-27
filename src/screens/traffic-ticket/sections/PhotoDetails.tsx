@@ -2,6 +2,8 @@ import { View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
 import React from 'react';
 import { PhotoDetailsProps } from '../interfaces/ticket.interface';
 import theme from '../../../theme';
+import NextButton from '../../../components/nextButton';
+import ButtonsContainer from '../../../components/buttonsContainer';
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({ navigation, values  }) => {
 
@@ -17,13 +19,14 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({ navigation, values  }) => {
           <Text style={styles.photoButtonText}>Tomar foto</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.bottomButtonContainer}>
-        <Button
-          title="Siguiente"
-          onPress={() => navigation.navigate('DriverDetails')}
+
+      <ButtonsContainer>
+        <NextButton
+          navigation={navigation}
+          pagaName="DriverDetails"
           disabled={isNextButtonDisabled}
         />
-      </View>
+      </ButtonsContainer>
     </View>
   );
 };

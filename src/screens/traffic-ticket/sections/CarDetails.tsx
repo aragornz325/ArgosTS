@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { CarDetailsProps } from '../interfaces/ticket.interface';
 import FormInputValue from '../../../components/formInputValue';
+import NextButton from '../../../components/nextButton';
+import BackButton from '../../../components/backButton';
+import ButtonsContainer from '../../../components/buttonsContainer';
+import FormContainer from '../../../components/FormContainer';
 
 const CarDetails: React.FC<CarDetailsProps> = ({
   navigation,
@@ -9,7 +13,6 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   handleChange,
   handleBlur,
   errors,
-  touched
 }) => {
 
     const isNextButtonDisabled = 
@@ -19,12 +22,19 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     !!errors.vehicleModel || 
     !values.plateNumber || 
     !values.color || 
-    !values.vehicleBrand || 
-    !values.vehicleModel;
+    !values.vehicleBrand 
 
   return (
-    <View style={styles.container}>
+    
+    <KeyboardAvoidingView 
+      style={styles.container} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
+      
+      <FormContainer>
+
       <Text style={styles.sectionTitle}>Datos del auto</Text>
+      <View>
       <FormInputValue
         name="plateNumber"
         placeholder="Número de patente"
@@ -62,14 +72,18 @@ const CarDetails: React.FC<CarDetailsProps> = ({
         onBlur={handleBlur('typeOfService')}
         value={values.typeOfService}
       />
-
-
-      
-      <Button 
-      title="Siguiente" 
-      onPress={() => navigation.navigate('InfractionDate')} 
-      disabled={isNextButtonDisabled}/>
-    </View>
+      </View>
+      </FormContainer>
+      <ButtonsContainer>
+        <BackButton 
+          navigation={navigation} />
+        <NextButton 
+          navigation={navigation} 
+          pagaName="InfractionDate"
+          disabled={isNextButtonDisabled} />
+      </ButtonsContainer>
+    </KeyboardAvoidingView>
+    
   );
 };
 
@@ -78,11 +92,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 24,
     marginBottom: 16,
-  },
+  }
 });
 
 export default CarDetails;

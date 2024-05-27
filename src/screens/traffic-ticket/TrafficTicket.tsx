@@ -11,6 +11,7 @@ import CarDetails from './sections/CarDetails';
 import InfractionDate from './sections/DateDetails';
 import PhotoDetails from './sections/PhotoDetails';
 import CameraComponent from '../../components/camera';
+import InfractionDetails from './sections/InfractionDetails';
 
 const Stack = createStackNavigator();
 
@@ -26,8 +27,8 @@ const initialValues: FormValues = {
   modelYear: 0,
   color: '',
   typeOfService: '',
-  infractionCode: null,
-  lawArticleNumber: null,
+  infractionCode: '',
+  lawArticleNumber: '',
   observations: '',
   driverName: '',
   driverLicenseNumber: '',
@@ -70,8 +71,6 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
             />
           )}
         </Stack.Screen>
-
-
         <Stack.Screen 
         name="DriverDetails"
         options={{ headerShown: false }} >
@@ -83,6 +82,21 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
               handleBlur={handleBlur}
               errors={errors}
               touched={touched}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen 
+        name="InfractionDetails"
+        options={{ headerShown: false }} >
+          {(props) => (
+            <InfractionDetails
+              {...props}
+              values={values}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              errors={errors}
+              touched={touched}
+              handleSubmit={handleSubmit}
             />
           )}
         </Stack.Screen>
@@ -108,7 +122,10 @@ const TrafficTicketScreen: React.FC = (navigation:any) => {
               {...props}
               values={values}
               setFieldValue={setFieldValue}
-              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              errors={errors}
+              touched={touched}
             />
           )}
         </Stack.Screen>

@@ -1,7 +1,8 @@
+import React from "react";
 import { useField } from "formik";
 import StyledTextInput from "./styledTextInput";
 import StyledText from "./styledText";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { TextInputProps } from "react-native-paper";
 
 
@@ -30,9 +31,6 @@ const FormInputValue = ({ name, ...props }) => {
       marginBottom: 20,
       marginTop: -5
     },
-    form: {
-      margin: 12
-    }
   })
 
 

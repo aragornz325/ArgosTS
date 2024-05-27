@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Text, Button, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import { DriverDetailsProps } from '../interfaces/ticket.interface';
 import useTrafficTicketForm from '../hooks/useTrafficTiketForm';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import FormInputValues from '../../../components/formInputValue';
+import BackButton from '../../../components/backButton';
+import NextButton from '../../../components/nextButton';
+import ButtonsContainer from '../../../components/buttonsContainer';
+import FormContainer from '../../../components/FormContainer';
+
 
 const DriverDetails: React.FC<DriverDetailsProps> = ({
     navigation,
@@ -11,7 +16,6 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
     handleChange,
     handleBlur,
     errors,
-    touched
 }) => {
     
     const { handleGetCurrentLocation } = useTrafficTicketForm();
@@ -21,41 +25,46 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
     const latitude = useTrafficTicketStore(state => state.latitude);
     const longitude = useTrafficTicketStore(state => state.longitude);
     useEffect(() => {
-        console.log('latitude', latitude);
-        console.log('longitude', longitude);
         handleChange('latitude')(latitude);
         handleChange('longitude')(longitude);
       }, [latitude, longitude]);
 
+      const isNextButtonDisabled = 
+    !!errors.driverEmail
+
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
+            <FormContainer>
             <Text style={styles.sectionTitle}>Datos del conductor</Text>
             <FormInputValues
-                name="name"
+                name="driverName"
                 placeholder="Nombre del conductor"
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
+                onChangeText={handleChange('driverName')}
+                onBlur={handleBlur('driverName')}
                 value={values.driverName}
             />
             <FormInputValues
-                name="email"
+                name="driverEmail"
                 placeholder="Email del conductor"
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
+                onChangeText={handleChange('driverEmail')}
+                onBlur={handleBlur('driverEmail')}
                 value={values.driverEmail}
             />
             <FormInputValues
-                name="phone"
+                name="driverPhone"
                 placeholder="telefono del conductor"
-                onChangeText={handleChange('phone')}
-                onBlur={handleBlur('phone')}
+                onChangeText={handleChange('driverPhone')}
+                onBlur={handleBlur('driverPhone')}
                 value={values.driverPhone}
             />
             <FormInputValues
-                name="licenseNumber"
+                name="driverLicenseNumber"
                 placeholder="Numero de licencia del conductor"
-                onChangeText={handleChange('licenseNumber')}
-                onBlur={handleBlur('licenseNumber')}
+                onChangeText={handleChange('driverLicenseNumber')}
+                onBlur={handleBlur('driverLicenseNumber')}
                 value={values.driverLicenseNumber}
             />
             <FormInputValues
@@ -72,12 +81,18 @@ const DriverDetails: React.FC<DriverDetailsProps> = ({
                 onBlur={handleBlur('longitude')}
                 value={values.longitude}
             />
-            <Button
-                title="Siguiente"
-                onPress={() => navigation.navigate('CarDetails')}
-                disabled={!!errors.longitude || !!errors.latitude || !values.latitude || !values.longitude}
-            />
-        </View>
+            </FormContainer>
+            <ButtonsContainer>
+                <BackButton 
+                    navigation={navigation} />
+                <NextButton 
+                    navigation={navigation} 
+                    pagaName="CarDetails"
+                    disabled={isNextButtonDisabled}
+                    />
+            </ButtonsContainer>    
+           
+        </KeyboardAvoidingView>
     );
 };
 
@@ -88,6 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 24,
