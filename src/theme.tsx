@@ -11,6 +11,7 @@ const theme = {
         textSecondary: '#586069',
         primary: '#7f58ff',
         white: '#fefefe',
+        buttonDisabled: '#AAAAAA',
     },
     fontSizes: {
         body: 14,

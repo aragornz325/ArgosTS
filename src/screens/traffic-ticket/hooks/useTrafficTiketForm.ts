@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import { FormValues } from '../interfaces/ticket.interface';
+import { createTicketQuery } from '../querys/trafficTicket.query';
 
 
 
@@ -12,8 +13,7 @@ const useTrafficTicketForm = () => {
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const  setField  = useTrafficTicketStore(state => state.setField);
-  //const { setFieldValue } = useFormikContext();
- 
+  
 
   useEffect(() => {
 
@@ -65,10 +65,13 @@ const useTrafficTicketForm = () => {
   };
 
   const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
-    console.log(values);
-    await handleGetCurrentLocation();
+    
+    console.log('values', values);
+    //await handleGetCurrentLocation();
+    await createTicketQuery(values);
     actions.resetForm();
     actions.setSubmitting(false);
+  
   };
 
   return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,7 +15,7 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   
 
-  React.useEffect(() => {
+  useEffect(() => {
     
     if (!isLoggedIn) {
       navigation.navigate('SignIn');

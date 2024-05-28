@@ -1,20 +1,19 @@
-import { StyleSheet, Text, View , KeyboardAvoidingView, Platform} from 'react-native'
+import { StyleSheet, Text, View , KeyboardAvoidingView, Platform, Button} from 'react-native'
 import React from 'react'
-import {InfractionDetailsProps} from '../interfaces/ticket.interface'
+import {FormValues, InfractionDetailsProps} from '../interfaces/ticket.interface'
 import FormInputValues from '../../../components/formInputValue'
 import ButtonsContainer from '../../../components/buttonsContainer'
 import BackButton from '../../../components/backButton'
-import NextButton from '../../../components/nextButton'
 import SubmitButton from '../../../components/submitButton'
 import FormContainer from '../../../components/FormContainer'
+import { createTicketQuery } from '../querys/trafficTicket.query'
 
 
 
 const InfractionDetails: React.FC<InfractionDetailsProps> = ({navigation, errors, handleBlur,handleChange, touched, values, handleSubmit}) => {
   
     const isNextButtonDisabled = !!errors.observations || !values.observations;
-        
-    
+   
 
     return (
     <KeyboardAvoidingView 
@@ -53,7 +52,7 @@ const InfractionDetails: React.FC<InfractionDetailsProps> = ({navigation, errors
                     navigation={navigation} />
                 <SubmitButton
                     disabled={isNextButtonDisabled}
-                    onPress={() => handleSubmit()} />
+                    onPress={()=>handleSubmit()} />
             </ButtonsContainer> 
     </KeyboardAvoidingView>
   )

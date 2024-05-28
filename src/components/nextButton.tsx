@@ -28,7 +28,7 @@ export default NextButton
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: theme.colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonDisabled: {
-    backgroundColor: '#aaa',
+    backgroundColor: theme.colors.buttonDisabled,
   },
   buttonText: {
     color: '#fff',

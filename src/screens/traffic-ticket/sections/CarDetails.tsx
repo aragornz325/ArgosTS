@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select'
 import { CarDetailsProps } from '../interfaces/ticket.interface';
 import FormInputValue from '../../../components/formInputValue';
 import NextButton from '../../../components/nextButton';
 import BackButton from '../../../components/backButton';
 import ButtonsContainer from '../../../components/buttonsContainer';
 import FormContainer from '../../../components/FormContainer';
+import {VehicleBrands, ServiceTypes, getYearsArray} from '../../../utils/pickersCar';
+
+
 
 const CarDetails: React.FC<CarDetailsProps> = ({
   navigation,
@@ -14,7 +18,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   handleBlur,
   errors,
 }) => {
-
+    const years = getYearsArray();
     const isNextButtonDisabled = 
     !!errors.plateNumber || 
     !!errors.color || 
@@ -23,8 +27,8 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     !values.plateNumber || 
     !values.color || 
     !values.vehicleBrand 
-
-  return (
+  
+    return (
     
     <KeyboardAvoidingView 
       style={styles.container} 
@@ -32,47 +36,51 @@ const CarDetails: React.FC<CarDetailsProps> = ({
       keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
       
       <FormContainer>
+    
+        <Text style={styles.sectionTitle}>Datos del Auto</Text>
+          <View>
+            <FormInputValue
+              name="plateNumber"
+              placeholder="Número de patente"
+              onChangeText={handleChange('plateNumber')}
+              onBlur={handleBlur('plateNumber')}
+              value={values.plateNumber}
+            />
+          
+            <FormInputValue
+              name="color"
+              placeholder="Color del auto"
+              onChangeText={handleChange('color')}
+              onBlur={handleBlur('color')}
+              value={values.color}
+            />
+            
+            <FormInputValue
+              name="vehicleModel"
+              placeholder="Modelo del auto"
+              onChangeText={handleChange('vehicleModel')}
+              onBlur={handleBlur('vehicleModel')}
+              value={values.vehicleModel}
+            />
 
-      <Text style={styles.sectionTitle}>Datos del auto</Text>
-      <View>
-      <FormInputValue
-        name="plateNumber"
-        placeholder="Número de patente"
-        onChangeText={handleChange('plateNumber')}
-        onBlur={handleBlur('plateNumber')}
-        value={values.plateNumber}
-      />
-     
-      <FormInputValue
-        name="color"
-        placeholder="Color del auto"
-        onChangeText={handleChange('color')}
-        onBlur={handleBlur('color')}
-        value={values.color}
-      />
-      
-      <FormInputValue
-        name="vehicleBrand"
-        placeholder="Fabricante del auto"
-        onChangeText={handleChange('vehicleBrand')}
-        onBlur={handleBlur('vehicleBrand')}
-        value={values.vehicleBrand}
-      />
-      <FormInputValue
-        name="vehicleModel"
-        placeholder="Modelo del auto"
-        onChangeText={handleChange('vehicleModel')}
-        onBlur={handleBlur('vehicleModel')}
-        value={values.vehicleModel}
-      />
-      <FormInputValue
-        name="typeOfService"
-        placeholder="tipo de servicio"
-        onChangeText={handleChange('typeOfService')}
-        onBlur={handleBlur('typeOfService')}
-        value={values.typeOfService}
-      />
-      </View>
+            <RNPickerSelect
+              placeholder={{ label: 'Selecciona un año...', value: null }}
+              onValueChange={(itemValue, itemIndex) => handleChange('modelYear')(itemValue)}
+              items={years.map(year => ({ label: year.toString(), value: year.toString() }))}
+            />
+            
+            <RNPickerSelect
+              placeholder={{ label: 'Selecciona una marca...', value: null }}
+              onValueChange={(itemValue, itemIndex) => handleChange('vehicleBrand')(itemValue)}
+              items={VehicleBrands.map(brand => ({ label: brand, value: brand }))}
+            />
+            <RNPickerSelect
+              placeholder={{ label: 'Selecciona un tipo de servicio...', value: null }}
+              onValueChange={(itemValue, itemIndex) => handleChange('typeOfService')(itemValue)}
+              items={ServiceTypes.map(service => ({ label: service, value: service }))}
+            />
+
+          </View>
       </FormContainer>
       <ButtonsContainer>
         <BackButton 

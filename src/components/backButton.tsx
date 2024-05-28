@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginVertical: 10,
+      width: 120,
     },
     buttonDisabled: {
       backgroundColor: '#aaa',

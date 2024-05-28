@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps } from 'formik';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo de formulario
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
@@ -12,19 +12,19 @@ import InfractionDate from './sections/DateDetails';
 import PhotoDetails from './sections/PhotoDetails';
 import CameraComponent from '../../components/camera';
 import InfractionDetails from './sections/InfractionDetails';
+import { ParamListBase } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
 const initialValues: FormValues = {
   date: new Date(),
-  time: new Date(),
   location: '',
-  longitude: '',
-  latitude: '',
+  longitude: 0,
+  latitude: 0,
   plateNumber: '',
   vehicleBrand: '',
   vehicleModel: '',
-  modelYear: 0,
+  modelYear: '',
   color: '',
   typeOfService: '',
   infractionCode: '',
@@ -40,7 +40,8 @@ const initialValues: FormValues = {
 };
 
 
-const TrafficTicketScreen: React.FC = (navigation:any) => {
+
+const TrafficTicketScreen: React.FC = (navigation) => {
   const { handleSubmit } = useTrafficTicketForm();
 
 

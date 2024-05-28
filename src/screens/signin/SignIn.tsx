@@ -10,10 +10,6 @@ import {SignInValues} from "./interfaces/signIn.interface";
 import useSignIn from "./hooks/useSignIn";
 
 
-
-
-
-
 export default function SignIn () {
   const initValues: SignInValues = {
     email: "",

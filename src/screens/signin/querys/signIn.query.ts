@@ -18,10 +18,10 @@ export const signInQuery = async (values: SignInValues) => {
                },
            }
        );
-         console.log(response);
        if (response.status !== 201) {
              throw new Error("Error");
          }
+         console.log(response.data);
          return response.data;
    } catch (error) {
        console.log(error);

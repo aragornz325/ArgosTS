@@ -4,25 +4,24 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { FormikErrors, FormikTouched, FormikProps } from 'formik';
 
 export interface FormValues {
-  time: Date;
   date: Date;
   location: string;
-  latitude: string;
-  longitude: string;
   plateNumber: string;
   vehicleBrand: string;
   vehicleModel: string;
-  modelYear: number;
+  modelYear: string;
   color: string;
-  typeOfService: string;
-  infractionCode: string | null;
-  lawArticleNumber: string | null;
-  observations: string;
-  driverName: string;
-  driverLicenseNumber: string;
-  driverAddress: string;
-  driverPhone: string;
-  driverEmail: string;
+  typeOfService: string; // Assuming this refers to 'Tipo de Servicio'
+  infractionCode: string; // 'Codigo Infraccion' in Spanish
+  lawArticleNumber: string; // 'Articulo Ley' in Spanish
+  observations?: string; // Optional since there may not always be observations
+  driverName: string; // Name of the driver
+  driverLicenseNumber: string; // Driver's license number
+  driverAddress: string; // Address of the driver
+  driverPhone: string; // Phone number of the driver // Phone number of the driver // Optional since there may not always be observations
+  driverEmail: string; // Email of the driver
+  latitude: number;
+  longitude: number;
   photo: string;
 }
 

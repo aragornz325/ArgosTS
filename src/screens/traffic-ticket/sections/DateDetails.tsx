@@ -12,7 +12,7 @@ const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, 
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
 
-  const isNextButtonDisabled = !values.date || !values.time || !values.location || !!errors.location;
+  const isNextButtonDisabled = !values.date || !values.location || !!errors.location;
 
   return (
     <KeyboardAvoidingView 
@@ -29,7 +29,7 @@ const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, 
             <View pointerEvents="none">
               <FormInputValue
                 name="date"
-                placeholder="Fecha"
+                placeholder="Fecha y hora de la infracción"
                 value={values.date.toDateString()}
                 editable={false}
               />
@@ -43,37 +43,10 @@ const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, 
               onChange={(event, selectedDate) => {
                 setDatePickerVisible(Platform.OS === 'ios');
                 const currentDate = selectedDate || values.date;
+                console.log('currentDate', currentDate);
                 setFieldValue('date', currentDate);
                 if (Platform.OS !== 'ios') {
                   setDatePickerVisible(false);
-                }
-              }}
-            />
-          )}
-        </View>
-
-        <View style={styles.section}>
-          <TouchableOpacity onPress={() => setTimePickerVisible(true)}>
-            <View pointerEvents="none">
-              <FormInputValue
-                name="time"
-                placeholder="Hora"
-                value={values.time.toTimeString().slice(0, 5)}
-                editable={false}
-              />
-            </View>
-          </TouchableOpacity>
-          {timePickerVisible && (
-            <DateTimePicker
-              value={values.time}
-              mode="time"
-              display="default"
-              onChange={(event, selectedTime) => {
-                setTimePickerVisible(Platform.OS === 'ios');
-                const currentTime = selectedTime || values.time;
-                setFieldValue('time', currentTime);
-                if (Platform.OS !== 'ios') {
-                  setTimePickerVisible(false);
                 }
               }}
             />
