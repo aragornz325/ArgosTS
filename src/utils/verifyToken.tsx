@@ -1,15 +1,20 @@
 import { jwtDecode } from "jwt-decode";
 
-const verifyToken = (token: string) => {
+const verifyToken = (token: string): boolean => {
     if (!token) {
-        return false;
+      return false;
     }
-    const decoded: any = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-    if (decoded.exp < currentTime) {
+    try {
+      const decoded: any = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
         return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('Token verification failed', error);
+      return false;
     }
-    return true;
-}
+  };
 
 export default verifyToken;

@@ -7,7 +7,7 @@ import NextButton from '../../../components/nextButton';
 import BackButton from '../../../components/backButton';
 import ButtonsContainer from '../../../components/buttonsContainer';
 import FormContainer from '../../../components/FormContainer';
-import {VehicleBrands, ServiceTypes, getYearsArray} from '../../../utils/pickersCar';
+import {VehicleBrands, ServiceTypes, getYearsArray, pickerStyles} from '../../../utils/pickersCar';
 
 
 
@@ -18,7 +18,10 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   handleBlur,
   errors,
 }) => {
+
     const years = getYearsArray();
+
+
     const isNextButtonDisabled = 
     !!errors.plateNumber || 
     !!errors.color || 
@@ -64,21 +67,27 @@ const CarDetails: React.FC<CarDetailsProps> = ({
             />
 
             <RNPickerSelect
-              placeholder={{ label: 'Selecciona un año...', value: null }}
-              onValueChange={(itemValue, itemIndex) => handleChange('modelYear')(itemValue)}
-              items={years.map(year => ({ label: year.toString(), value: year.toString() }))}
-            />
-            
-            <RNPickerSelect
-              placeholder={{ label: 'Selecciona una marca...', value: null }}
-              onValueChange={(itemValue, itemIndex) => handleChange('vehicleBrand')(itemValue)}
-              items={VehicleBrands.map(brand => ({ label: brand, value: brand }))}
+                placeholder={{ label: 'Selecciona un año...', value: null }}
+                onValueChange={(itemValue, itemIndex) => handleChange('modelYear')(itemValue)}
+                items={years.map(year => ({ label: year.toString(), value: year.toString() }))}
+                useNativeAndroidPickerStyle={false}
+                style={pickerStyles}
             />
             <RNPickerSelect
-              placeholder={{ label: 'Selecciona un tipo de servicio...', value: null }}
-              onValueChange={(itemValue, itemIndex) => handleChange('typeOfService')(itemValue)}
-              items={ServiceTypes.map(service => ({ label: service, value: service }))}
+                placeholder={{ label: 'Selecciona una marca...', value: null }}
+                onValueChange={(itemValue, itemIndex) => handleChange('vehicleBrand')(itemValue)}
+                items={VehicleBrands.sort().map(brand => ({ label: brand, value: brand }))}
+                useNativeAndroidPickerStyle={false}
+                style={pickerStyles}
             />
+            <RNPickerSelect
+                placeholder={{ label: 'Selecciona un tipo de servicio...', value: null }}
+                onValueChange={(itemValue, itemIndex) => handleChange('typeOfService')(itemValue)}
+                items={ServiceTypes.sort().map(service => ({ label: service, value: service }))}
+                useNativeAndroidPickerStyle={false}
+                style={pickerStyles}
+            />
+
 
           </View>
       </FormContainer>

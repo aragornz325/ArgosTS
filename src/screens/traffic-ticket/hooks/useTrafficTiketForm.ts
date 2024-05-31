@@ -66,7 +66,6 @@ const useTrafficTicketForm = () => {
 
   const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
     
-    console.log('values', values);
     //await handleGetCurrentLocation();
     await createTicketQuery(values);
     actions.resetForm();

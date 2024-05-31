@@ -10,14 +10,14 @@
         }
       ]
     ],
-    "name": "ArgosTS",
-    "slug": "ArgosTS",
+    "name": "Argos",
+    "slug": "Argos",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/municipio-de-hasenkamp.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/vecteezy.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

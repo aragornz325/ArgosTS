@@ -34,10 +34,10 @@ const takePicture = async () => {
         if (photo){
             setPhoto(photo.uri);
         }else{
-            console.log('No se tomo la foto');
+            console.error('No se tomo la foto');
         }
        } catch(error) {
-        console.log('Error al tomar la foto', error);
+        console.error('Error al tomar la foto', error);
        }
     }
 };
@@ -51,7 +51,7 @@ if(photo){
         navigation.goBack();
 
     } catch(error) {
-        console.log('Error saving photo', error);
+        console.error('Error saving photo', error);
     }
 }
 

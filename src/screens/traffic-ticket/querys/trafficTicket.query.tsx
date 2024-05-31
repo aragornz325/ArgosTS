@@ -26,9 +26,6 @@ export const createTicketQuery = async (values: FormValues) => {
             formData.append(key, (values[key]));
         }
     }
-
-    console.log('formData', formData);
-
     try {
         const response = await axios.post(
             `${config.backend.baseURL}/ticket`,
@@ -42,7 +39,6 @@ export const createTicketQuery = async (values: FormValues) => {
             }
         );
 
-        console.debug('response', response.data);
         return response.data;
     } catch (error: any) {
         if (error.response) {

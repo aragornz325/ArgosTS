@@ -43,7 +43,6 @@ const InfractionDate: React.FC<InfractionDateProps> = ({ values, setFieldValue, 
               onChange={(event, selectedDate) => {
                 setDatePickerVisible(Platform.OS === 'ios');
                 const currentDate = selectedDate || values.date;
-                console.log('currentDate', currentDate);
                 setFieldValue('date', currentDate);
                 if (Platform.OS !== 'ios') {
                   setDatePickerVisible(false);

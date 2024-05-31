@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from "react-native";
 
@@ -11,6 +11,7 @@ import useSignIn from "./hooks/useSignIn";
 
 
 export default function SignIn () {
+  
   const initValues: SignInValues = {
     email: "",
     password: ""
@@ -20,7 +21,7 @@ export default function SignIn () {
       <View style={styles.container}>
         <Formik
             initialValues={initValues}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values, actions) => handleSubmit(values, actions)}
             validationSchema={LoginValidationSchema}
         >
           {({ handleSubmit }) => (
@@ -41,6 +42,7 @@ export default function SignIn () {
             </View>
           )}
         </Formik>
+        <Text style={styles.footText}>Designed by Olimpo</Text>
       </View>
     );
   }
@@ -81,4 +83,8 @@ const styles = StyleSheet.create({
             },
         }),
     },
+    footText:{
+      fontStyle:'italic',
+      marginBottom: 10,
+    }
 });

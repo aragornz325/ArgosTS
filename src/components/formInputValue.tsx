@@ -3,7 +3,8 @@ import { useField } from "formik";
 import StyledTextInput from "./styledTextInput";
 import StyledText from "./styledText";
 import { StyleSheet, View } from "react-native";
-import { TextInputProps } from "react-native-paper";
+
+import theme from "../theme";
 
 
 const FormInputValue = ({ name, ...props }) => {
@@ -17,20 +18,23 @@ const FormInputValue = ({ name, ...props }) => {
           onChangeText={(value:string) => helpers.setValue(value)}
           {...props}
         />
-        {meta.error ? (
-          <StyledText style={styles.error }>{meta.error}</StyledText>
-        ) : null}
+        <StyledText style={[styles.error, !meta.error && styles.errorHidden ]}>
+          {meta.error || " "} {/* Agregamos un espacio en caso de que no haya error */}
+        </StyledText>
       </>
     );
   };
 
   const styles = StyleSheet.create({
     error: {
-      color: "red",
+      color: theme.colors.error,
       fontSize: 12,
-      marginBottom: 20,
-      marginTop: -5
+      marginBottom: 8,
+      marginTop: -5,
     },
+    errorHidden: {
+      opacity: 0, // Oculta el espacio pero mantiene el espacio ocupado
+  },
   })
 
 

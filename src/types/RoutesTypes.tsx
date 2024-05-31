@@ -6,6 +6,7 @@ export type RootStackParamList = {
     SignIn: undefined;
     PhotoDetails: undefined;
     CameraComponent: undefined;
-
+    AppBar: undefined;
+    Profile: undefined;
   };
   

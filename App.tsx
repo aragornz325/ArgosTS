@@ -1,12 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
+import 'reflect-metadata';
+import React, { useCallback, useEffect, useState } from 'react';
+import Entypo from '@expo/vector-icons/Entypo';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+
 import Main from './src/Main';
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Evitar que la pantalla de splash se oculte automáticamente
+        await SplashScreen.preventAutoHideAsync();
+
+        // Pre-cargar fuentes, hacer cualquier llamada API necesaria aquí
+        await Font.loadAsync(Entypo.font);
+
+        // Retraso artificial de dos segundos para simular una carga lenta
+        // experiencia. Por favor, elimina esto si copias y pegas el código.
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Indicar a la aplicación que ya está lista para renderizar
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // Esto indica a la pantalla de splash que se oculte inmediatamente
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <StatusBar style="dark" />
-      <Main/>
+      <Main />
     </View>
   );
 }

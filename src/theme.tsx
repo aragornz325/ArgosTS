@@ -12,6 +12,8 @@ const theme = {
         primary: '#7f58ff',
         white: '#fefefe',
         buttonDisabled: '#AAAAAA',
+        error: '#d73a4a',
+        iconsPicker:'#CECDAA',
     },
     fontSizes: {
         body: 14,
@@ -26,4 +28,6 @@ const theme = {
     }
     };
     
+
+
     export default theme;

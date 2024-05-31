@@ -6,7 +6,6 @@ import ButtonsContainer from '../../../components/buttonsContainer'
 import BackButton from '../../../components/backButton'
 import SubmitButton from '../../../components/submitButton'
 import FormContainer from '../../../components/FormContainer'
-import { createTicketQuery } from '../querys/trafficTicket.query'
 
 
 

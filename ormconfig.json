@@ -1,0 +1,5 @@
+{
+    "type": "react-native",
+    "database": "argosMobile.db",
+    "location": "default"
+  }

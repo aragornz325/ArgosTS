@@ -4,6 +4,7 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo de formulario
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
+import { TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
 
 
 import DriverDetails from './sections/DriverDetails';
@@ -12,7 +13,7 @@ import InfractionDate from './sections/DateDetails';
 import PhotoDetails from './sections/PhotoDetails';
 import CameraComponent from '../../components/camera';
 import InfractionDetails from './sections/InfractionDetails';
-import { ParamListBase } from '@react-navigation/native';
+import ProtectedRoutes from '../../routes/ProtectedRoutes';
 
 const Stack = createStackNavigator();
 
@@ -52,15 +53,27 @@ const TrafficTicketScreen: React.FC = (navigation) => {
       onSubmit={handleSubmit}
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue, errors, touched }: FormikProps<FormValues>) => (
-        <Stack.Navigator initialRouteName="PhotoDetails">
+        <Stack.Navigator 
+        initialRouteName="PhotoDetails"
+        screenOptions={{
+          headerShown: false,
+          transitionSpec: {
+            open: TransitionSpecs.FadeInFromBottomAndroidSpec,
+            close: TransitionSpecs.FadeOutToBottomAndroidSpec,
+          },
+          headerStyleInterpolator: HeaderStyleInterpolators.forFade,
+        }}
+        >
         <Stack.Screen 
         name='PhotoDetails'
         options={{ headerShown: false }}>
           {(props) => (
+            <ProtectedRoutes>
             <PhotoDetails
             {...props}
             values={values}
             />
+            </ProtectedRoutes>
           )}
         </Stack.Screen>
         
@@ -76,6 +89,7 @@ const TrafficTicketScreen: React.FC = (navigation) => {
         name="DriverDetails"
         options={{ headerShown: false }} >
           {(props) => (
+            <ProtectedRoutes>
             <DriverDetails
               {...props}
               values={values}
@@ -84,12 +98,14 @@ const TrafficTicketScreen: React.FC = (navigation) => {
               errors={errors}
               touched={touched}
             />
+            </ProtectedRoutes>
           )}
         </Stack.Screen>
         <Stack.Screen 
         name="InfractionDetails"
         options={{ headerShown: false }} >
           {(props) => (
+            <ProtectedRoutes>
             <InfractionDetails
               {...props}
               values={values}
@@ -99,12 +115,14 @@ const TrafficTicketScreen: React.FC = (navigation) => {
               touched={touched}
               handleSubmit={handleSubmit}
             />
+            </ProtectedRoutes>
           )}
         </Stack.Screen>
         <Stack.Screen 
         name="CarDetails"
         options={{ headerShown: false }}>
           {(props) => (
+            <ProtectedRoutes>
             <CarDetails
               {...props}
               values={values}
@@ -113,12 +131,14 @@ const TrafficTicketScreen: React.FC = (navigation) => {
               errors={errors}
               touched={touched}
             />
+            </ProtectedRoutes>
           )}
         </Stack.Screen>
         <Stack.Screen 
         name="InfractionDate"
         options={{ headerShown: false }}>
           {(props) => (
+            <ProtectedRoutes>
             <InfractionDate
               {...props}
               values={values}
@@ -128,6 +148,7 @@ const TrafficTicketScreen: React.FC = (navigation) => {
               errors={errors}
               touched={touched}
             />
+            </ProtectedRoutes>
           )}
         </Stack.Screen>
       </Stack.Navigator>

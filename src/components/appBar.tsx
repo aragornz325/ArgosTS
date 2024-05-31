@@ -5,10 +5,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import AppBarTap from './appBarTap';
 import { RootStackParamList} from '../types/RoutesTypes';
+import { useAuthStore } from '../store/useAuthStore';
 
 
 const AppBar = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const isLoggedIn = useAuthStore((state) => state.loggedIn);
+
+  if(!isLoggedIn) return null;
 
   return (
     <View style={styles.container}>
