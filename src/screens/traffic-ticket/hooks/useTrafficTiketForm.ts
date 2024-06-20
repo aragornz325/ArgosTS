@@ -6,54 +6,38 @@ import { FormikHelpers } from 'formik';
 import { useTrafficTicketStore } from '../../../store/useTicketStore';
 import { FormValues } from '../interfaces/ticket.interface';
 import { createTicketQuery } from '../querys/trafficTicket.query';
-
+import { useNavigation } from '../../../components/hooksComponents/useNavigation';
+import { SQLite_TT_query } from '../querys/SQLite.TT.query';
 
 
 const useTrafficTicketForm = () => {
-
+  const navigation = useNavigation();
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const  setField  = useTrafficTicketStore(state => state.setField);
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga
+  const setField = useTrafficTicketStore(state => state.setField);
   
-
   useEffect(() => {
-
     (async () => {
       const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
       const mediaLibraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       const locationStatus = await Location.requestForegroundPermissionsAsync();
-
+      
       if (cameraStatus.status !== 'granted' || mediaLibraryStatus.status !== 'granted' || locationStatus.status !== 'granted') {
         Alert.alert('Permission required', 'We need camera, photo library and location permissions to make this work!');
       }
     })();
   }, []);
-
-
-
+  
   const getPermissionAsync = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== 'granted') {
-    return;
-  }
+    if (status !== 'granted') {
+      return;
+    }
   };
-
-  // const handlePhotoCapture = async () => {
-  //   let result = await ImagePicker.launchCameraAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: false,
-  //   });
-
-  //   if (!result.canceled) {
-  //     setFieldValue('photo', result.assets[0].uri);
-  //   }else{
-  //     setFieldValue('photo', '');
-  //   }
-  // };
-
-
+  
   const handleGetCurrentLocation = async () => {
     try {
-      getPermissionAsync();
+      await getPermissionAsync();
       let location = await Location.getCurrentPositionAsync({});
       setField('latitude', location.coords.latitude.toString());
       setField('longitude', location.coords.longitude.toString());
@@ -63,14 +47,23 @@ const useTrafficTicketForm = () => {
       return null; 
     }
   };
-
-  const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
-    
-    //await handleGetCurrentLocation();
-    await createTicketQuery(values);
-    actions.resetForm();
-    actions.setSubmitting(false);
   
+  const handleSubmit = async (values: FormValues, actions: FormikHelpers<FormValues>) => {
+    setIsLoading(true); // Inicia el estado de carga
+    try {
+      await handleGetCurrentLocation();
+
+      
+      await SQLite_TT_query.addTrafficTicket(values);
+      //await createTicketQuery(values);
+      actions.resetForm();
+      actions.setSubmitting(false);
+      navigation.navigate('Home')
+    } catch (error) {
+      console.error('Error al enviar el ticket:', error);
+    } finally {
+      setIsLoading(false); // Finaliza el estado de carga
+    }
   };
 
   return {
@@ -78,7 +71,7 @@ const useTrafficTicketForm = () => {
     datePickerVisible,
     setDatePickerVisible,
     handleSubmit,
-    //handlePhotoCapture
+    isLoading, // Agrega el estado de carga
   };
 };
 

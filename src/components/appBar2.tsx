@@ -1,19 +1,22 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Ajusta la importación según tus necesidades
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../types/RoutesTypes';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from './hooksComponents/useNavigation';
+import { useAuthStore } from '../store/useAuthStore';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'AppBar'>;
 
 const AppBar2: React.FC = () => {
+  const navigation = useNavigation();
+  
+  const isLoggedIn = useAuthStore((state) => state.loggedIn);
+  if (!isLoggedIn) {
+    return null;
+  }
 
-  const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
     <View style={styles.container}>
       <View style={styles.left}>
-        <TouchableOpacity onPress={()=>navigation.navigate('Profile')} style={styles.iconButton}>
+        <TouchableOpacity onPress={()=>navigation.navigate('MainMenu')} style={styles.iconButton}>
           <Ionicons name="menu" size={24} color="black" />
         </TouchableOpacity>
       </View>

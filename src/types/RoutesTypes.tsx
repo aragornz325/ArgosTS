@@ -8,5 +8,8 @@ export type RootStackParamList = {
     CameraComponent: undefined;
     AppBar: undefined;
     Profile: undefined;
+    MainMenu: undefined;
+    OtherModules: undefined;
+    MisMultas: undefined;
   };
   

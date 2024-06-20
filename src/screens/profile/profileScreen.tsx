@@ -7,6 +7,7 @@ import ModalInputChange from '../../components/modalInput';
 import useProfileForm from './hooks/profile.hook'; 
 import { Feather } from '@expo/vector-icons';
 import theme from '../../theme';
+import { ActivityIndicator } from 'react-native-paper';
 
 const ProfileForm: React.FC = () => {
     const {
@@ -20,6 +21,7 @@ const ProfileForm: React.FC = () => {
         handleOnSubmit,
         setModalVisible,
         setCurrentValue,
+        isLoading,
     } = useProfileForm();
 
     if (!profile) {
@@ -36,7 +38,8 @@ const ProfileForm: React.FC = () => {
                 <ScrollView style={styles.container}>
                     <View style={styles.header}>
                         <Image source={{ uri: values.avatarUrl }} style={styles.avatar} />
-                        <TouchableOpacity style={styles.cameraIcon}>
+                        <TouchableOpacity 
+                        style={styles.cameraIcon}>
                             <Feather name="camera" size={24} color="black" />
                         </TouchableOpacity>
                         <Text style={styles.name}>{values.firstName} {values.lastName}</Text>
@@ -52,10 +55,12 @@ const ProfileForm: React.FC = () => {
                             touched={touched}
                             handleEdit={handleEdit}
                         />
-    
-                        <Button onPress={handleSubmit as any} title="Actualizar" />
+                        {isLoading ? (
+                            <ActivityIndicator size="large" color="#0000ff" />
+                                ) : (
+                            <Button onPress={handleSubmit as any} title="Actualizar" />)}
                     </View>
-    
+
                     <ModalInputChange
                         modalVisible={modalVisible}
                         setModalVisible={setModalVisible}
@@ -80,6 +85,9 @@ const ProfileForm: React.FC = () => {
             backgroundColor: '#00aaff',
             padding: 20,
             alignItems: 'center',
+            borderBottomEndRadius: 40,
+            borderBottomStartRadius: 40,
+            height: 300,
         },
         avatar: {
             width: 150,
@@ -110,6 +118,17 @@ const ProfileForm: React.FC = () => {
         },
         section: {
             padding: 20,
+            borderWidth: 1,
+            margin: 10,
+            marginTop: -20,
+            backgroundColor: '#E9F5F8',
+            borderColor: '#00aaff',
+            borderRadius: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 4,
         },
         sectionTitle: {
             fontSize: 18,

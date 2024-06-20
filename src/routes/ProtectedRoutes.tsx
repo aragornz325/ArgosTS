@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types/RoutesTypes'; // Ajusta la ruta según corresponda
+import { useNavigation } from '../components/hooksComponents/useNavigation';// Ajusta la ruta según corresponda
 import { useAuthStore } from '../store/useAuthStore'; // Ajusta la ruta según corresponda
 
 interface ProtectedRoutesProps {
@@ -13,7 +11,7 @@ interface ProtectedRoutesProps {
 
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
   const isLoggedIn = useAuthStore((state) => state.loggedIn);
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation();
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
   const [isCheckingToken, setIsCheckingToken] = useState(true);
 

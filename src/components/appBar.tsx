@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import Constants from 'expo-constants';
 import AppBarTap from './appBarTap';
-import { RootStackParamList} from '../types/RoutesTypes';
 import { useAuthStore } from '../store/useAuthStore';
+import { useNavigation } from './hooksComponents/useNavigation';
 
 
 const AppBar = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation();
   const isLoggedIn = useAuthStore((state) => state.loggedIn);
 
   if(!isLoggedIn) return null;

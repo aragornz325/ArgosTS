@@ -6,10 +6,11 @@ import ButtonsContainer from '../../../components/buttonsContainer'
 import BackButton from '../../../components/backButton'
 import SubmitButton from '../../../components/submitButton'
 import FormContainer from '../../../components/FormContainer'
+import { ActivityIndicator } from 'react-native-paper'
 
 
 
-const InfractionDetails: React.FC<InfractionDetailsProps> = ({navigation, errors, handleBlur,handleChange, touched, values, handleSubmit}) => {
+const InfractionDetails: React.FC<InfractionDetailsProps> = ({navigation, errors, handleBlur,handleChange, touched, values, handleSubmit, isLoading}) => {
   
     const isNextButtonDisabled = !!errors.observations || !values.observations;
    
@@ -47,12 +48,16 @@ const InfractionDetails: React.FC<InfractionDetailsProps> = ({navigation, errors
             />
             </FormContainer>
             <ButtonsContainer>
-                <BackButton 
-                    navigation={navigation} />
-                <SubmitButton
-                    disabled={isNextButtonDisabled}
-                    onPress={()=>handleSubmit()} />
-            </ButtonsContainer> 
+            <BackButton navigation={navigation} />
+                {isLoading ? (
+                  <ActivityIndicator size="large" color="#0000ff" />
+                ) : (
+            <SubmitButton
+              disabled={isNextButtonDisabled}
+              onPress={() => handleSubmit()}
+            />
+                )}
+            </ButtonsContainer>
     </KeyboardAvoidingView>
   )
 }

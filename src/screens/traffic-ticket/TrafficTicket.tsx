@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps } from 'formik';
-import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { FormValues } from './interfaces/ticket.interface'; // Importa tu tipo de formulario
 import { TrafficTicketSchema } from './validationSchema/ticket.validationSchema';
 import useTrafficTicketForm from './hooks/useTrafficTiketForm';
@@ -43,7 +43,7 @@ const initialValues: FormValues = {
 
 
 const TrafficTicketScreen: React.FC = (navigation) => {
-  const { handleSubmit } = useTrafficTicketForm();
+  const { handleSubmit, isLoading } = useTrafficTicketForm();
 
 
   return (
@@ -57,8 +57,9 @@ const TrafficTicketScreen: React.FC = (navigation) => {
         initialRouteName="PhotoDetails"
         screenOptions={{
           headerShown: false,
+          animationEnabled: true,
           transitionSpec: {
-            open: TransitionSpecs.FadeInFromBottomAndroidSpec,
+            open: TransitionSpecs.TransitionIOSSpec,
             close: TransitionSpecs.FadeOutToBottomAndroidSpec,
           },
           headerStyleInterpolator: HeaderStyleInterpolators.forFade,
@@ -108,6 +109,7 @@ const TrafficTicketScreen: React.FC = (navigation) => {
             <ProtectedRoutes>
             <InfractionDetails
               {...props}
+              isLoading={isLoading}
               values={values}
               handleChange={handleChange}
               handleBlur={handleBlur}

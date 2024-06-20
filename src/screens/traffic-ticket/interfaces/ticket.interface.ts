@@ -60,6 +60,7 @@ export interface InfractionDateProps {
   }
 
 export interface InfractionDetailsProps {
+  isLoading: boolean;
   navigation: StackNavigationProp<ParamListBase>;
   values: FormValues;
   handleChange: any;

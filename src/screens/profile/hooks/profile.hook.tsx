@@ -11,6 +11,7 @@ const useProfileForm = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentField, setCurrentField] = useState<string>('');
     const [currentValue, setCurrentValue] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleEdit = (field: string, value: string) => {
         setCurrentField(field);
@@ -24,6 +25,7 @@ const useProfileForm = () => {
     };
 
     const updateProfileQuery = async (values: IProfile) => {
+        setIsLoading(true);
         const token = await AsyncStorage.getItem('token');
         try {
             const response = await axios.patch(
@@ -38,6 +40,7 @@ const useProfileForm = () => {
                 }
             );
             setProfile(response.data);
+            setIsLoading(false);
             return response.data;
         } catch (error: any) {
             if (error.response) {
@@ -86,6 +89,7 @@ const useProfileForm = () => {
         handleOnSubmit,
         setModalVisible,
         setCurrentValue,
+        isLoading,
     };
 };
 

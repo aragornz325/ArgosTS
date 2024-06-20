@@ -5,12 +5,23 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import * as SQLite from "expo-sqlite";
+
 
 import Main from './src/Main';
+import { initializeDatabase } from './db/initdb';
 
 export default function App() {
+  const db = SQLite.openDatabaseSync("argos_local_db");
+  useDrizzleStudio(db);
   const [appIsReady, setAppIsReady] = useState(false);
 
+  useEffect(() => {
+    initializeDatabase()
+  }
+  , []);
+  
   useEffect(() => {
     async function prepare() {
       try {

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, Dimensions } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types/RoutesTypes';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '../../components/hooksComponents/useNavigation';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+const { width, height } = Dimensions.get('window');
 
 const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation();
   const [date, setDate] = useState(new Date());
   const [isConnected, setIsConnected] = useState<boolean | null>(false);
   const [connectionType, setConnectionType] = useState<string | null>('sin info');
@@ -33,8 +34,9 @@ const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <View>
       <Image
-          source={require('../../../assets/logo-hasenkamp.png')}
+          source={require('../../../assets/images.png')}
           style={styles.logo}
+          resizeMode='contain'
         />
       </View>
       <StatusBar barStyle="dark-content" />
@@ -83,12 +85,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   time: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
   },
   date: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#666',
   },
   location: {
@@ -104,15 +106,18 @@ const styles = StyleSheet.create({
   },
   connectivityText: {
     color: '#fff',
+    fontSize: 12,
   },
   connectionType: {
     color: '#fff',
     marginLeft: 5,
+    fontSize: 12,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: -200,
   },
   title: {
     fontSize: 24,
@@ -142,9 +147,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   logo: {
+    justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
     marginTop: 25,
     marginBottom: 8,
+    width: width * 0.95,    
+    
   },
 });
 

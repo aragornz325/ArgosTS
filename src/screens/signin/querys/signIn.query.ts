@@ -5,6 +5,8 @@ import config from "../../../config/config";
 
 export const signInQuery = async (values: SignInValues) => {
    try {
+
+        console.log(`${config.backend.baseURL}/auth/login`);
        const response = await axios.post(
            `${config.backend.baseURL}/auth/login`,
            {

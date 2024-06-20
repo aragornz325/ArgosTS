@@ -3,8 +3,8 @@ import { Camera, CameraType, CameraView, FlashMode } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { Text } from 'react-native';
 import ConstantArgos from '../../utils/constant';
-import { useNavigation } from '@react-navigation/native';
 import { useFormikContext } from 'formik';
+import { useNavigation } from './useNavigation';
 
 const useCamera = (initialType: CameraType, initialFlash: FlashMode) => {
 
