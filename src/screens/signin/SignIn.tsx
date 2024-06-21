@@ -42,7 +42,7 @@ export default function SignIn () {
             </View>
           )}
         </Formik>
-        <Text style={styles.footText}>Designed by Olimpo</Text>
+        <Text style={styles.footText}>Designed by Legendary Code</Text>
       </View>
     );
   }

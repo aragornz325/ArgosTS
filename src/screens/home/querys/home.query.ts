@@ -1,16 +1,19 @@
 import axios, { AxiosError } from 'axios';
 import config from '../../../config/config'; // Asegúrate de ajustar la ruta según sea necesario
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {iTrafficTicket} from '../../../interfaces/trafficTicket';
 
-interface allValues {
-    [key: string]: any;
-    photo: string; // URI de la foto
-}
 
-export const createTicketQuery = async (values: allValues) => {    
+export const createTicketQuery = async (values: iTrafficTicket[]) => {    
+    
+    
+    for (const value of values) {
+    
+    delete value.syncronized;
+    
     const formData = new FormData();
     const token = await AsyncStorage.getItem('token');
-    const photoUri = values.photo;
+    const photoUri = value.photo;
     const photoName = photoUri.split('/').pop();
 
     formData.append('photo', {
@@ -26,6 +29,7 @@ export const createTicketQuery = async (values: allValues) => {
             formData.append(key, (values[key]));
         }
     }
+}
     try {
         const response = await axios.post(
             `${config.backend.baseURL}/ticket`,

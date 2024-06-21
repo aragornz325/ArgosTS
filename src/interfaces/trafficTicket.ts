@@ -17,5 +17,6 @@ export interface iTrafficTicket {
     driverEmail: string; // Email of the driver
     latitude: number;
     longitude: number;
+    syncronized?: boolean; // Indicates if the ticket has been synchronized with the server
     photo: string; // Photo of the traffic ticket
 }

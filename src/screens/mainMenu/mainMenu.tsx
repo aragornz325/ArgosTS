@@ -36,7 +36,7 @@ const MainMenuScreen = () => {
         <MenuItem icon="group" text="Usuarios" onPress={() => navigation.navigate('Children')} />
         <MenuItem icon="subscriptions" text="Otros modulos" onPress={() => navigation.navigate('OtherModules')} />
         <MenuItem icon="lock-outline" text="Seguridad y privacidad" onPress={() => navigation.navigate('Privacy')} />
-        <MenuItem icon="info-outline" text="Mis Multas" onPress={() => navigation.navigate('MisMultas')} />
+        <MenuItem icon="info-outline" text="Mis Infracciones" onPress={() => navigation.navigate('MisMultas')} />
         <MenuItem icon="gavel" text="Términos y condiciones" onPress={() => navigation.navigate('Terms')} />
         <MenuItem icon="logout" text="Cerrar sesión" onPress={() => handleLogout()} />
         <MenuItem icon="home" text="Volver al inicio" onPress={() => navigation.navigate('Home')} />

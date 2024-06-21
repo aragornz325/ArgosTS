@@ -27,6 +27,7 @@ export const SQLite_TT_query = {
                 driverEmail: values.driverEmail,
                 latitude: values.latitude,
                 longitude: values.longitude,
+                synchronised: false,
                 photo: values.photo,
             }).execute();
             return response;

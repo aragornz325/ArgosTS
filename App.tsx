@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import 'reflect-metadata';
 import React, { useCallback, useEffect, useState } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -8,20 +8,27 @@ import * as Font from 'expo-font';
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import * as SQLite from "expo-sqlite";
 
+import { drizzle } from "drizzle-orm/expo-sqlite";
+import { openDatabaseSync } from "expo-sqlite/next";
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import migrations from './drizzle/migrations';
 
 import Main from './src/Main';
 import { initializeDatabase } from './db/initdb';
 
+// Inicializar la base de datos SQLite para migraciones
+
+const expoDb = openDatabaseSync("argos_local_db");
+const dbMigrations = drizzle(expoDb);
+
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+  const { success, error } = useMigrations(dbMigrations, migrations);
+
+  // Mover este hook fuera de la condición para que siempre se ejecute en el mismo orden
   const db = SQLite.openDatabaseSync("argos_local_db");
   useDrizzleStudio(db);
-  const [appIsReady, setAppIsReady] = useState(false);
 
-  useEffect(() => {
-    initializeDatabase()
-  }
-  , []);
-  
   useEffect(() => {
     async function prepare() {
       try {
@@ -54,6 +61,26 @@ export default function App() {
 
   if (!appIsReady) {
     return null;
+  }
+
+  if (error) {
+    return (
+      <ScrollView>
+        <View>
+          <Text>Tenemos un problema grave</Text>
+          <Text>Migration error: {error.name}</Text>
+          <Text>Migration error: {error.stack}</Text>
+        </View>
+      </ScrollView>
+    );
+  }
+
+  if (!success) {
+    return (
+      <View>
+        <Text>Migration is in progress...</Text>
+      </View>
+    );
   }
 
   return (

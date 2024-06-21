@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm"
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
+
+import {integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
 export const traffic_tickets_model = sqliteTable("traffic_tickets", {
 	id: integer("id").primaryKey(),
@@ -21,7 +22,9 @@ export const traffic_tickets_model = sqliteTable("traffic_tickets", {
     driverEmail: text("driverEmail"),
     latitude: integer("latitude"),
     longitude: integer("longitude"),
+    synchronised: integer('is_syncronized', {mode: 'boolean'}).notNull().default(false),
     photo: text("photo"),
+
 })
 
 export type SelectTrafficTickets = typeof traffic_tickets_model.$inferSelect

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, Dimensions } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types/RoutesTypes';
 import { useNavigation } from '../../components/hooksComponents/useNavigation';
+import { SQLite_Home_query } from './querys/sqlite.home.query';
+import { useFocusEffect } from '@react-navigation/native';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 const { width, height } = Dimensions.get('window');
@@ -14,6 +16,7 @@ const HomeScreen: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean | null>(false);
   const [connectionType, setConnectionType] = useState<string | null>('sin info');
   const [location, setLocation] = useState<string | null>(null);
+  const [tickets, setTickets] = useState<any>(null);
 
   useEffect(() => {
     const interval = setInterval(() => setDate(new Date()), 1000);
@@ -28,7 +31,24 @@ const HomeScreen: React.FC = () => {
     };
   }, []);
 
-  
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTickets = async () => {
+        const response = await SQLite_Home_query.getUnsyncronizedTickets();
+        setTickets(response);
+      };
+
+      fetchTickets();
+    }
+    , [])
+  );
+
+
+  const handleSync = () => {
+    // Aquí colocas la lógica para sincronizar los tickets
+    console.log('Sincronizando tickets...');
+  };
+
 
   return (
     <View style={styles.container}>
@@ -63,6 +83,21 @@ const HomeScreen: React.FC = () => {
           <Text style={styles.buttonText}>Registrar Infracción</Text>
         </TouchableOpacity>
       </View>
+
+      <View>
+      {tickets && tickets.length > 0 && (
+        <View style={styles.pendingTicketsContainer}>
+          <Text style={styles.location}>Infracciones pendientes: {tickets.length}</Text>
+          <TouchableOpacity 
+            style={styles.syncButton}
+            onPress={handleSync}>
+            <Text style={styles.syncButtonText}>Sincronizar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+  
+      </View>
+
     </View>
   );
 };
@@ -71,6 +106,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  pendingTicketsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+  },
+  syncButton: {
+    backgroundColor: '#007bff',
+    padding: 8,
+    borderRadius: 8,
+  },
+  syncButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
   },
   header: {
     flexDirection: 'row',
@@ -97,6 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#999',
     marginTop: 5,
+    paddingLeft: 3,
   },
   connectivityIndicator: {
     padding: 5,

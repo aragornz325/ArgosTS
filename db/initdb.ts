@@ -1,10 +1,13 @@
 import * as SQLite from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system';
 
 
 
 // Función para crear la tabla si no existe
 export const initializeDatabase = async () => {
      const db = await SQLite.openDatabaseAsync('argos_local_db');
+     const dbPath = `${FileSystem.documentDirectory}SQLite/argos_local_db`;
+     console.log('Database Path:', dbPath);
     try {
         await db.execAsync(`
         PRAGMA journal_mode = WAL;
