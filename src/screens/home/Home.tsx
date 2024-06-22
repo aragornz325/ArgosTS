@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../types/RoutesTypes';
 import { useNavigation } from '../../components/hooksComponents/useNavigation';
 import { SQLite_Home_query } from './querys/sqlite.home.query';
 import { useFocusEffect } from '@react-navigation/native';
+import { syncronizeTicketQuery } from './querys/home.query';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 const { width, height } = Dimensions.get('window');
@@ -45,8 +46,7 @@ const HomeScreen: React.FC = () => {
 
 
   const handleSync = () => {
-    // Aquí colocas la lógica para sincronizar los tickets
-    console.log('Sincronizando tickets...');
+    syncronizeTicketQuery(tickets);
   };
 
 

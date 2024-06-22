@@ -2,15 +2,21 @@ import axios, { AxiosError } from 'axios';
 import config from '../../../config/config'; // Asegúrate de ajustar la ruta según sea necesario
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {iTrafficTicket} from '../../../interfaces/trafficTicket';
+import { SQLite_Home_query } from './sqlite.home.query';
 
+interface allValues {
+    [key: string]: any;
+    photo: string; // URI de la foto
+}
 
-export const createTicketQuery = async (values: iTrafficTicket[]) => {    
+export const syncronizeTicketQuery = async (values: allValues[]) => {   
     
-    
-    for (const value of values) {
-    
-    delete value.syncronized;
-    
+   for (const value of values) { 
+
+    console.log('value:', value);
+    const id = value.id;
+    delete value.id;
+    delete value.synchronised;
     const formData = new FormData();
     const token = await AsyncStorage.getItem('token');
     const photoUri = value.photo;
@@ -21,15 +27,14 @@ export const createTicketQuery = async (values: iTrafficTicket[]) => {
         name: photoName,
         type: 'image/jpeg',
     }, photoName as string | 'photo.jpg');
-    for (const key in values) {
+    for (const key in value) {
         if (key === 'date') {
-            formData.append(key, values[key].toISOString()); 
+            formData.append(key, value[key]); 
         } else
         if (key !== 'photo') {
-            formData.append(key, (values[key]));
+            formData.append(key, (value[key]));
         }
     }
-}
     try {
         const response = await axios.post(
             `${config.backend.baseURL}/ticket`,
@@ -42,7 +47,7 @@ export const createTicketQuery = async (values: iTrafficTicket[]) => {
                 },
             }
         );
-
+        await SQLite_Home_query.changeSynchronisedStatus({...value, id, synchronised: true});
         return response.data;
     } catch (error: any) {
         if (error.response) {
@@ -56,4 +61,6 @@ export const createTicketQuery = async (values: iTrafficTicket[]) => {
             console.error('Error message:', error.message);
         }
     }
+}
 };
+
