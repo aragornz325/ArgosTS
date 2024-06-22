@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, Dimensions, ActivityIndicator } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types/RoutesTypes';
@@ -18,6 +18,7 @@ const HomeScreen: React.FC = () => {
   const [connectionType, setConnectionType] = useState<string | null>('sin info');
   const [location, setLocation] = useState<string | null>(null);
   const [tickets, setTickets] = useState<any>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => setDate(new Date()), 1000);
@@ -45,8 +46,12 @@ const HomeScreen: React.FC = () => {
   );
 
 
-  const handleSync = () => {
-    syncronizeTicketQuery(tickets);
+  const handleSync = async () => {
+    setIsSyncing(true);
+    await syncronizeTicketQuery(tickets);
+    setIsSyncing(false);
+    const response = await SQLite_Home_query.getUnsyncronizedTickets();
+    setTickets(response);
   };
 
 
@@ -85,18 +90,21 @@ const HomeScreen: React.FC = () => {
       </View>
 
       <View>
-      {tickets && tickets.length > 0 && (
-        <View style={styles.pendingTicketsContainer}>
-          <Text style={styles.location}>Infracciones pendientes: {tickets.length}</Text>
-          <TouchableOpacity 
-            style={styles.syncButton}
-            onPress={handleSync}>
-            <Text style={styles.syncButtonText}>Sincronizar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-  
-      </View>
+  {tickets && tickets.length > 0 && (
+    <View style={styles.pendingTicketsContainer}>
+      <Text style={styles.location}>Infracciones pendientes: {tickets.length}</Text>
+      <TouchableOpacity 
+        style={styles.syncButton}
+        onPress={handleSync}>
+        <Text style={styles.syncButtonText}>Sincronizar</Text>
+      </TouchableOpacity>
+    </View>
+  )}
+
+  {isSyncing && (
+    <ActivityIndicator size="large" color="#0000ff" />
+  )}
+</View>
 
     </View>
   );

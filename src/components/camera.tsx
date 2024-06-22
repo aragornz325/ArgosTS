@@ -6,7 +6,7 @@ import ConstantArgos from '../utils/constant';
 import ButtonCamera from './button';
 import useCamera from './hooksComponents/useCamera';
 import {CameraProps} from '../interfaces/camera.interface';
-
+ 
 
 const CameraComponent: React.FC = () => {
     const {
@@ -26,6 +26,7 @@ const CameraComponent: React.FC = () => {
         return <Text>No tienes permisos para usar la cámara</Text>;
     }
 
+
     return (
         <View style={styles.container}>
             {!photo ?
@@ -34,6 +35,8 @@ const CameraComponent: React.FC = () => {
                 style={styles.camera}
                 flash={flash}
                 facing={type}
+                animateShutter={true}
+                autofocus='on'
             > 
             <View style={{
                 flexDirection: 'row',
